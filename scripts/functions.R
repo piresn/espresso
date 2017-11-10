@@ -16,6 +16,13 @@ process_ids <- function(input, idtype, ensembl, max) {
 ###########################################################
 ###########################################################
 
+list_projects_sp <- function(sp){
+  as.character(unique(subset(meta, species == sp)$project))
+}
+
+###########################################################
+###########################################################
+
 translate_ensembl <- function(x, ensembl){
   
   out <- c()
@@ -58,16 +65,19 @@ long_format <- function(x){
   return(x)
 }
 
+###########################################################
+###########################################################
 
-create_df <- function(species, genes, ensembl){
+create_df <- function(species, genes, ensembl, experiment){
   
-  x <- get(species)[genes,]
+  x <- get(species)[genes, ]
+  tmp <- subset(meta, project %in% experiment)$sample
+  x <- x[, tmp]
   
   x$gene <- translate_ensembl(rownames(x), ensembl)
   
   x <- long_format(x)
 }
-
 
 ###########################################################
 ###########################################################

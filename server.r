@@ -17,29 +17,20 @@ shinyServer(function(input, output, session) {
   # NOT in use yet
   # later use to create vector sample names for subsetting
   
-  output$modal_experiments <- renderUI({
+  output$filter <- renderUI({
     
-    if(!is.null(values$df)){
-      
-      tagList(
-        
-        actionLink('sel_experiment', 'Filter datasets'),
-        
-        bsModal('mod_exps', 'Filter datasets',
-                'sel_experiment', size = 'small',
-                fluidRow(
-                  checkboxGroupInput('experiment', NULL,
-                                     choices = unique(meta[
-                                       meta$species == input$species,
-                                       'project']),
-                                     selected = unique(meta[
-                                       meta$species == input$species,
-                                       'project'])
-                                     )
+    shinyjs::hidden(
+      wellPanel(id = "filt_panel",
+                checkboxGroupInput('experiment', NULL,
+                                   choices = list_projects_sp(input$species),
+                                   selected = list_projects_sp(input$species)
                 )
-        )
       )
-    }
+    )
+  })
+  
+  observeEvent(input$showfilter, {
+    shinyjs::toggle(id = "filt_panel")
   })
   
   #############################################

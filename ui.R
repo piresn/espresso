@@ -27,12 +27,14 @@ shinyUI(
                    radioButtons('species', 'Species', c('mouse', 'human'),
                                 inline = TRUE),
                    
-                   actionButton('go', 'GO'),
+                   actionLink('showfilter', 'Filter datasets'),
+                   
+                   uiOutput('filter'),
                    
                    tags$p(),
-                   
-                   uiOutput('modal_experiments'),
-                   
+
+                   actionButton('go', 'GO'),
+
                    tags$hr(),
                    
                    tableOutput('geneinfo')
