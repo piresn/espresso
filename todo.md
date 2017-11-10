@@ -1,7 +1,5 @@
 # To do:
 
-- create git (check compatibility with laptop)
-
 - save counts as binary instead of csv
   - or at least specify (UTF-8?) encodings
 

@@ -54,8 +54,8 @@ long_format <- function(x){
   
   # match group infos
   x$sample <- as.character(x$sample)
-  id <- samples[match(x$sample, samples$sample), 'id']
-  x$group <- factor(sample_id[match(id, sample_id$id), "group"])
+  id <- samples[match(x$sample, samples$sample), 'group_id']
+  x$group <- factor(sample_id[match(id, sample_id$group_id), "group"])
   
   return(x)
 }

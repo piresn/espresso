@@ -14,7 +14,7 @@ source('test.R')
 initial_sel_genes <- "UCP1\nAXL"
 
 # limited, use to skip biomart functions
-offline = FALSE
+offline = TRUE
 
 if(offline){
   initial_sel_genes = "ENSMUSG00000031710\nENSMUSG00000002602"
