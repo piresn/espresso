@@ -9,7 +9,6 @@ library('biomaRt')
 library("dplyr")
 
 source('scripts/functions.R')
-source('scripts/test.R')
 
 initial_sel_genes <- "UCP1\nAXL"
 
@@ -31,12 +30,25 @@ if(!offline){
 mouse <- read.csv('dummydata/mouse.csv', row.names = 1)
 human <- read.csv('dummydata/human.csv', row.names = 1)
 
-sample_id <- read.csv("dummydata/sampleID.csv")
 
+################################ meta data
+
+sample_id <- read.csv("dummydata/sampleID.csv")
 samples <- read.csv("dummydata/samples.csv")
+
 # make names comparable: sample names in headers had "-" replaced by "."s
 # make the same for samples file:
 levels(samples$sample) <- gsub('-', '.', levels(samples$sample))
+samples$sample <- as.character(samples$sample)
+
+# merge
+meta <- merge(samples, sample_id, by = 'group_id')
+rm(samples, sample_id)
+
+##################################
 
 database_version <- scan("dummydata/version", character(),
                          sep = ':', strip.white = TRUE)[c(2, 4)]
+
+source('scripts/test.R')
+

@@ -17,7 +17,7 @@ shinyServer(function(input, output, session) {
   
   output$modal_experiments <- renderUI({
     
-    if(!is.null(values$df) & FALSE){
+    if(!is.null(values$df) & TRUE){
       
       tagList(
         
@@ -77,7 +77,8 @@ shinyServer(function(input, output, session) {
   })
   
   output$sampleTable <- renderDataTable({
-    merge(samples, sample_id, by = 'group_id')[,-1]
+    meta[,1]
+    #merge(samples, sample_id, by = 'group_id')[,-1]
   })
   
   output$debug <- renderPrint({

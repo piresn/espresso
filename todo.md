@@ -1,15 +1,15 @@
 # To do:
 
-- add markdown with help
+- add filters per project
+
+- write help page
+
+- there are currently 3 separate calls to getBM. Try to simplify. Or just create table with all gene names.
 
 - add more data
 
-- add filters per project
-
 - save counts as binary instead of csv
   - or at least specify (UTF-8?) encodings
-
-- there are currently 3 separate calls to getBM. Try to simplify.
 
 
 # Bugs

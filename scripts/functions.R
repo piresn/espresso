@@ -52,10 +52,8 @@ long_format <- function(x){
             variable.name = "sample",
             value.name = "counts")
   
-  # match group infos
-  x$sample <- as.character(x$sample)
-  id <- samples[match(x$sample, samples$sample), 'group_id']
-  x$group <- factor(sample_id[match(id, sample_id$group_id), "group"])
+  # merge group infos
+  x <- merge(x, meta, by = 'sample')
   
   return(x)
 }

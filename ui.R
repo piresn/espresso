@@ -41,8 +41,9 @@ shinyUI(
           
           column(9,
                  fluidRow(
-                   #actionLink('sort', "sort"),
+                   
                    checkboxInput("reps", "Calculate replicate means"),
+                   
                    plotOutput('plot')
                  )
           )
