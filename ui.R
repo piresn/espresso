@@ -54,6 +54,9 @@ shinyUI(
              helpText(paste(c('database', database_version),
                             collapse = ' ')
              )
+    ),
+    tabPanel("Help",
+             includeMarkdown("scripts/help.md")
     )
   )
 )

@@ -8,8 +8,8 @@ library("reshape2")
 library('biomaRt')
 library("dplyr")
 
-source('functions.R')
-source('test.R')
+source('scripts/functions.R')
+source('scripts/test.R')
 
 initial_sel_genes <- "UCP1\nAXL"
 
