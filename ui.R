@@ -1,6 +1,6 @@
 shinyUI(
   navbarPage(
-    "v0.1", theme = shinytheme("yeti"),
+    "v0.1", theme = shinytheme("flatly"),
     
     tabPanel(
       "Gene expression",
@@ -10,7 +10,7 @@ shinyUI(
         useShinyjs(),
         
         fluidRow(
-          #shinythemes::themeSelector(),
+          # shinythemes::themeSelector(),
           verbatimTextOutput('debug'),
           
           column(3,
@@ -27,7 +27,8 @@ shinyUI(
                    radioButtons('species', 'Species', c('mouse', 'human'),
                                 inline = TRUE),
                    
-                   actionLink('showfilter', 'Filter datasets'),
+                   actionLink('showfilter', 'Filter datasets',
+                              icon = icon('sort-down')),
                    
                    uiOutput('filter'),
                    

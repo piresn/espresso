@@ -85,7 +85,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$sampleTable <- renderDataTable({
-    meta[,1]
+    meta[,-1]
   })
   
   output$debug <- renderPrint({
