@@ -32,7 +32,7 @@ shinyUI(
                    tags$p(),
                    
                    uiOutput('modal_experiments'),
-
+                   
                    tags$hr(),
                    
                    tableOutput('geneinfo')
@@ -48,6 +48,12 @@ shinyUI(
           )
         )
       )
+    ),
+    tabPanel("Samples",
+             dataTableOutput("sampleTable"),
+             helpText(paste(c('database', database_version),
+                            collapse = ' ')
+             )
     )
   )
 )

@@ -76,7 +76,12 @@ shinyServer(function(input, output, session) {
     print(values$plot)
   })
   
+  output$sampleTable <- renderDataTable({
+    merge(samples, sample_id, by = 'group_id')[,-1]
+  })
+  
   output$debug <- renderPrint({
+    str(values$ensembl)
   })
   
 })

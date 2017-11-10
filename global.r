@@ -37,3 +37,6 @@ samples <- read.csv("dummydata/samples.csv")
 # make names comparable: sample names in headers had "-" replaced by "."s
 # make the same for samples file:
 levels(samples$sample) <- gsub('-', '.', levels(samples$sample))
+
+database_version <- scan("dummydata/version", character(),
+                         sep = ':', strip.white = TRUE)[c(2, 4)]
