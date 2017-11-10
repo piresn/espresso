@@ -2,6 +2,8 @@ shinyServer(function(input, output, session) {
   
   values <- reactiveValues(plot = NULL,
                            ensembl = NULL,
+                           # experiment has to be initial input$species
+                           experiment = list_projects_sp('mouse'),
                            genes = NULL,
                            df = NULL,
                            gmeans = NULL)
@@ -17,7 +19,7 @@ shinyServer(function(input, output, session) {
   
   output$modal_experiments <- renderUI({
     
-    if(!is.null(values$df) & TRUE){
+    if(!is.null(values$df)){
       
       tagList(
         
@@ -27,8 +29,13 @@ shinyServer(function(input, output, session) {
                 'sel_experiment', size = 'small',
                 fluidRow(
                   checkboxGroupInput('experiment', NULL,
-                                     choices = 'none',
-                                     selected = 'none')
+                                     choices = unique(meta[
+                                       meta$species == input$species,
+                                       'project']),
+                                     selected = unique(meta[
+                                       meta$species == input$species,
+                                       'project'])
+                                     )
                 )
         )
       )
@@ -36,6 +43,14 @@ shinyServer(function(input, output, session) {
   })
   
   #############################################
+  
+  observeEvent(input$species, {
+    values$experiment <- list_projects_sp(input$species)
+  })
+  
+  observeEvent(input$experiment, {
+    values$experiment <- input$experiment
+  })
   
   observeEvent(input$go, {
     
@@ -53,17 +68,19 @@ shinyServer(function(input, output, session) {
                                 input$idtype,
                                 values$ensembl,
                                 max = 8)
+    
     # data for plotting
     values$df <- create_df(input$species,
                            values$genes,
-                           values$ensembl)
+                           values$ensembl,
+                           values$experiment)
     
     # geometric means
     values$gmeans <- calc_gmeans(values$df)
     
   })
   
-
+  
   
   #########################################
   
@@ -78,11 +95,10 @@ shinyServer(function(input, output, session) {
   
   output$sampleTable <- renderDataTable({
     meta[,1]
-    #merge(samples, sample_id, by = 'group_id')[,-1]
   })
   
   output$debug <- renderPrint({
-    str(values$ensembl)
+    values$experiment
   })
   
 })

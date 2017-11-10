@@ -1,6 +1,6 @@
 # To do:
 
-- add filters per project
+- add filters per project - trying to create input$experiments filter (see test.R, but not working - crashes when run app)
 
 - write help page
 
@@ -14,6 +14,5 @@
 
 # Bugs
 
-- plot not distinguishing groups - maybe because offline?
 - gene abo on mouse gives error
 - also - in human there are two ensembl annotation for abo
