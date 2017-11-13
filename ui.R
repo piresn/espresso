@@ -38,7 +38,7 @@ shinyUI(
 
                    tags$hr(),
                    
-                   tableOutput('geneinfo')
+                   withSpinner(tableOutput('geneinfo'), type = 8)
                  )
           ),
           

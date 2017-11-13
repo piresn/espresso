@@ -7,6 +7,7 @@ library("RColorBrewer")
 library("reshape2")
 library('biomaRt')
 library("dplyr")
+library("shinycssloaders")
 
 source('scripts/functions.R')
 
@@ -26,7 +27,7 @@ load('dummydata/data.Rdata')
 #################################
 
 # limited, use to skip biomart functions
-offline = TRUE
+offline = FALSE
 
 if(offline){
   initial_sel_genes = "ENSMUSG00000031710\nENSMUSG00000002602"
