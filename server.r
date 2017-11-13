@@ -14,9 +14,6 @@ shinyServer(function(input, output, session) {
   
   #############################################
   
-  # NOT in use yet
-  # later use to create vector sample names for subsetting
-  
   output$filter <- renderUI({
     
     shinyjs::hidden(
@@ -39,7 +36,11 @@ shinyServer(function(input, output, session) {
     values$experiment <- list_projects_sp(input$species)
   })
   
-  observeEvent(input$experiment, {
+  # observeEvent(input$experiment, {
+  #   values$experiment <- input$experiment
+  # })
+  
+  observe({
     values$experiment <- input$experiment
   })
   
@@ -89,7 +90,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$debug <- renderPrint({
-    values$experiment
+     str(values$experiment)
   })
   
 })
