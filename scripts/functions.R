@@ -6,9 +6,18 @@ process_ids <- function(input, idtype, ensembl, max) {
   out <- out[1:max][!is.na(out[1:max])]
   
   if(idtype == 'GeneSymbol'){
-    try(out <- unlist(getBM(attributes = c("ensembl_gene_id"),
-                            filters = "external_gene_name",
-                            values = out, mart = ensembl)))
+    try({
+      
+      out <- getBM(attributes = c("ensembl_gene_id", "chromosome_name"),
+                   filters = "external_gene_name",
+                   values = out, mart = ensembl)
+      
+      # only allow genes annotated on the main chromosomes (i.e. remove alternate models on patches and haplotypes)
+      # e.g. ABO has annotation in chromosome '9' and alternate in 'CHR_HG2030_PATCH'
+      out <- subset(out, chromosome_name %in% c('X', 'Y', 'MT', as.character(seq(1, 22))))
+      
+      out <- unlist(out$ensembl_gene_id)
+    })
   }
   return(out)
 }

@@ -34,10 +34,10 @@ if(offline){
 }
 
 if(!offline){
-  ensembl_human <- useMart("ensembl",
+  ensembl_human <- useEnsembl("ensembl",
                            dataset = 'hsapiens_gene_ensembl')
   
-  ensembl_mouse <- useMart("ensembl",
+  ensembl_mouse <- useEnsembl("ensembl",
                            dataset = 'mmusculus_gene_ensembl')
 }
 

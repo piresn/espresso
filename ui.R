@@ -38,7 +38,7 @@ shinyUI(
 
                    tags$hr(),
                    
-                   withSpinner(tableOutput('geneinfo'), type = 8)
+                   tableOutput('geneinfo')
                  )
           ),
           
@@ -47,7 +47,7 @@ shinyUI(
                    
                    checkboxInput("reps", "Show individual samples"),
                    
-                   plotOutput('plot')
+                   withSpinner(plotOutput('plot'), type = 8)
                  )
           )
         )
