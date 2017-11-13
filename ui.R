@@ -55,7 +55,7 @@ shinyUI(
     ),
     tabPanel("Samples",
              dataTableOutput("sampleTable"),
-             helpText(paste(c('database', database_version),
+             helpText(paste(c('Database created:', timestamp),
                             collapse = ' ')
              )
     ),
