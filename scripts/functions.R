@@ -130,7 +130,7 @@ express_plot <- function(x, gmeans, reps){
   # match order groups between samples and replicate means
   x$group <- factor(x$group, levels = levels(gmeans$group))
   
-  if(reps){
+  if(!reps){
     
     g <- ggplot(data = gmeans, aes(x = group, y = counts,
                                    fill = gene)) +

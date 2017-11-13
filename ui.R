@@ -45,7 +45,7 @@ shinyUI(
           column(9,
                  fluidRow(
                    
-                   checkboxInput("reps", "Calculate replicate means"),
+                   checkboxInput("reps", "Show individual samples"),
                    
                    plotOutput('plot')
                  )

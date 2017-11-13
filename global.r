@@ -22,7 +22,7 @@ load('dummydata/data.Rdata')
 
 
 #################################
-# developer
+# development
 #################################
 
 # limited, use to skip biomart functions
