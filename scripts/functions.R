@@ -134,6 +134,8 @@ calc_gmeans <- function(x){
 
 express_plot <- function(x, gmeans, reps){
   
+  breaks <- c(1 %o% 10^(-1:6))
+  
   validate(need(nrow(x) > 0, 'Nothing to plot'))
   
   # match order groups between samples and replicate means
@@ -143,24 +145,32 @@ express_plot <- function(x, gmeans, reps){
     
     g <- ggplot(data = gmeans, aes(x = group, y = counts,
                                    fill = gene)) +
+      geom_segment(aes(x=group, xend = group, y=0, yend = gmean, color = gene),
+                   size = 2, alpha = 0.3, show.legend = FALSE) +
       geom_point(aes(x = group, y = gmean),
                  shape = 21, size = rel(5)) +
-      geom_point(data = x, aes(y = counts, color = gene), shape = 16,
-                 size = rel(2.5), alpha = 0.3)
+      geom_point(data = x, aes(y = counts), shape = 4,
+                 size = rel(2.5), show.legend = FALSE) +
+      geom_point(data = x, aes(y = counts, color = gene), shape = 4,
+                 size = rel(2.5), alpha = 0.5, show.legend = FALSE)
     
     
   }else{ 
     g <- ggplot(data = x, aes(x = sample, y = counts, fill = gene)) +
       facet_grid(group ~ .,
                  scales = "free_y", space = "free_y",
-                 switch = "y", as.table = FALSE) + 
-      geom_point(shape = 21, size = rel(3))
-    
+                 switch = "y", as.table = FALSE) +
+      geom_segment(aes(xend = sample, y=0, yend = counts, color = gene),
+                   size = 2, alpha = 0.3) +
+      geom_point(shape = 21, size = rel(5), show.legend = FALSE)
   }
   
-  g + scale_y_log10() +
-    scale_fill_brewer(palette = 'Set2') +
-    scale_color_brewer(palette = 'Set2') +
+  g + scale_y_log10(breaks = breaks) +
+    scale_fill_brewer(palette = 'Dark2') +
+    scale_color_brewer(palette = 'Dark2') +
     coord_flip() +
-    theme_minimal(12)
+    theme_classic(16) +
+    theme(axis.line.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          panel.grid.major.x = element_line(color = 'grey95'))
 }

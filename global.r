@@ -1,6 +1,6 @@
 library("shiny")
 library("shinythemes")
-library('shinyjs') # need install at Hoengg
+library('shinyjs')
 library("shinyBS")
 library("ggplot2")
 library("RColorBrewer")

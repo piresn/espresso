@@ -6,4 +6,5 @@
 .Rapp.history
 *.Rproj
 dummydata/
+data/
 

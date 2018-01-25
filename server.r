@@ -44,6 +44,8 @@ shinyServer(function(input, output, session) {
     values$experiment <- input$experiment
   })
   
+  #############################################
+  
   observeEvent(input$go, {
     
     values$plot <- NULL
