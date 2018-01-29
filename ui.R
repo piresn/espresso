@@ -21,7 +21,7 @@ shinyUI(
                                  value = initial_sel_genes,
                                  width = '85%'),
                    
-                   radioButtons('idtype', NULL, c('EnsemblID', 'GeneSymbol'),
+                   radioButtons('idtype', NULL, c('GeneSymbol', 'EnsemblID'),
                                 inline = TRUE),
                    
                    radioButtons('species', 'Species', c('mouse', 'human'),
