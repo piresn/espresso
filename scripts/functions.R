@@ -132,7 +132,7 @@ calc_gmeans <- function(x){
 ###########################################################
 ###########################################################
 
-express_plot <- function(x, gmeans, reps){
+express_plot <- function(x, gmeans, showmeans){
   
   breaks <- c(1 %o% 10^(-1:6))
   
@@ -141,20 +141,14 @@ express_plot <- function(x, gmeans, reps){
   # match order groups between samples and replicate means
   x$group <- factor(x$group, levels = levels(gmeans$group))
   
-  if(!reps){
+  if(showmeans){
     
-    g <- ggplot(data = gmeans, aes(x = group, y = counts,
+    g <- ggplot(data = gmeans, aes(x = group, y = gmean,
                                    fill = gene)) +
       geom_segment(aes(x=group, xend = group, y=0, yend = gmean, color = gene),
                    size = 2, alpha = 0.3, show.legend = FALSE) +
-      geom_point(aes(x = group, y = gmean),
-                 shape = 21, size = rel(5)) +
-      geom_point(data = x, aes(y = counts), shape = 4,
-                 size = rel(2.5), show.legend = FALSE) +
-      geom_point(data = x, aes(y = counts, color = gene), shape = 4,
-                 size = rel(2.5), alpha = 0.5, show.legend = FALSE)
-    
-    
+      geom_point(shape = 21, size = rel(5))
+
   }else{ 
     g <- ggplot(data = x, aes(x = sample, y = counts, fill = gene)) +
       facet_grid(group ~ .,

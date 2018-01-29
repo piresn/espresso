@@ -83,7 +83,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$plot <- renderPlot({
-    values$plot <- express_plot(values$df, values$gmeans, reps = input$reps)
+    values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans)
     print(values$plot)
   })
   

@@ -45,9 +45,9 @@ shinyUI(
           column(9,
                  fluidRow(
                    
-                   checkboxInput("reps", "Show individual samples"),
+                   checkboxInput("showmeans", "Plot means", value = TRUE),
                    
-                   withSpinner(plotOutput('plot'), type = 8)
+                   withSpinner(plotOutput('plot'), type = 1)
                  )
           )
         )
