@@ -110,7 +110,7 @@ infoTable <- function(genes, ensembl){
 calc_gmeans <- function(x){
   
   geom_mean <- function(x){
-    exp(mean(log(x + 0.1)))
+    exp(mean(log(x + 1)))
   }
   
   find_order <- function(x){
@@ -146,13 +146,14 @@ express_plot <- function(x, gmeans, showmeans){
     g <- ggplot(data = gmeans, aes(x = group, y = gmean,
                                    fill = gene)) +
       geom_segment(aes(x=group, xend = group, y=0, yend = gmean, color = gene),
-                   size = 2, alpha = 0.3, show.legend = FALSE) +
+                   size = 2, alpha = 0.2, show.legend = FALSE) +
       geom_point(shape = 21, size = rel(5))
 
   }else{ 
     g <- ggplot(data = x, aes(x = sample, y = counts, fill = gene)) +
       facet_grid(group ~ .,
-                 scales = "free_y", space = "free_y",
+                 scales = "free_y",
+                 space = "free_y",
                  switch = "y", as.table = FALSE) +
       geom_segment(aes(xend = sample, y=0, yend = counts, color = gene),
                    size = 2, alpha = 0.3) +
@@ -162,6 +163,7 @@ express_plot <- function(x, gmeans, showmeans){
   g + scale_y_log10(breaks = breaks) +
     scale_fill_brewer(palette = 'Dark2') +
     scale_color_brewer(palette = 'Dark2') +
+    labs(y = 'TPM (transcripts per million)') +
     coord_flip() +
     theme_classic(16) +
     theme(axis.line.y = element_blank(),

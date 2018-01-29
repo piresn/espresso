@@ -19,8 +19,7 @@ initial_sel_genes <- "UCP1\nAXL"
 # import data
 #################################
 
-load('dummydata/data.Rdata')
-
+load('data/data.Rdata')
 
 #################################
 # development

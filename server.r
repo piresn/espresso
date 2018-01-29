@@ -92,7 +92,7 @@ shinyServer(function(input, output, session) {
   })
   
   output$debug <- renderPrint({
-     str(values$experiment)
+    length(values$plot$data$gene)
   })
   
 })
