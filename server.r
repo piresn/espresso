@@ -74,6 +74,7 @@ shinyServer(function(input, output, session) {
     
   })
   
+
   
   #########################################
   
@@ -89,19 +90,19 @@ shinyServer(function(input, output, session) {
   height = exprToFunction(calc_height())
   )
   
+  #########################################
   
   calc_width <- reactive({
     if(input$showmeans) return(600)
     else return(800)
   })
   
-  
   calc_height <- reactive({
-    if(length(values$plot$data$sample) > 0) return(length(values$plot$data$sample) + 1000)
-    if(length(values$plot$data$gene) > 0) return(length(values$plot$data$gene) + 400)
-    else return(100)
+    if(input$showmeans) return(18 * length(unique(values$plot$data$group)) + 150)
+    else return(18 * length(unique(values$plot$data$sample)) + 100)
   })
   
+  #########################################
   
   output$sampleTable <- renderDataTable({
     meta[,-1]
@@ -109,7 +110,7 @@ shinyServer(function(input, output, session) {
 
 
   output$debug <- renderPrint({
-    values$gmeans
-  })
+    
+   })
   
 })
