@@ -107,7 +107,16 @@ shinyServer(function(input, output, session) {
   output$sampleTable <- renderDataTable({
     meta[,-1]
   })
-
+  
+  output$allmouse <- DT::renderDataTable({
+    round(mouse, 2)},
+    options = list(pageLength = 10))
+  
+  output$allhuman <- DT::renderDataTable({
+    round(human, 2)},
+    options = list(pageLength = 10))
+  
+  
 
   output$debug <- renderPrint({
     
