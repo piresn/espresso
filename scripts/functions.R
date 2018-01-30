@@ -165,6 +165,7 @@ express_plot <- function(x, gmeans, showmeans){
                     labels = function(n){
                       format(n, drop0trailing = TRUE, scientific = FALSE)},
                     name = 'TPM (transcripts per million)') +
+    expand_limits(y = 0.1) +
     scale_fill_brewer(palette = 'Dark2') +
     scale_color_brewer(palette = 'Dark2') +
     coord_flip() +
