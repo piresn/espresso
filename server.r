@@ -85,21 +85,31 @@ shinyServer(function(input, output, session) {
   output$plot <- renderPlot({
     values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans)
     print(values$plot)
-  }, width = 600, height = exprToFunction(calc_height()))
+  }, width = exprToFunction(calc_width()),
+  height = exprToFunction(calc_height())
+  )
   
-
-  output$sampleTable <- renderDataTable({
-    meta[,-1]
+  
+  calc_width <- reactive({
+    if(input$showmeans) return(600)
+    else return(800)
   })
-
+  
+  
   calc_height <- reactive({
     if(length(values$plot$data$sample) > 0) return(length(values$plot$data$sample) + 1000)
     if(length(values$plot$data$gene) > 0) return(length(values$plot$data$gene) + 400)
     else return(100)
   })
   
+  
+  output$sampleTable <- renderDataTable({
+    meta[,-1]
+  })
+
+
   output$debug <- renderPrint({
-    length(values$plot$data$sample)
+    values$gmeans
   })
   
 })
