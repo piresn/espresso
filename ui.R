@@ -45,7 +45,7 @@ shinyUI(
           column(9,
                  fluidRow(
                    
-                   checkboxInput("showmeans", "Plot means", value = TRUE),
+                   checkboxInput("showmeans", "Plot means only", value = FALSE),
                    
                    withSpinner(plotOutput('plot'), type = 1)
                  )

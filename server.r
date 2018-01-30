@@ -91,18 +91,15 @@ shinyServer(function(input, output, session) {
   output$sampleTable <- renderDataTable({
     meta[,-1]
   })
-  
+
   calc_height <- reactive({
-    if(length(values$plot$data$gene) == 0) height <- 100
-    else height <- 8 * length(values$plot$data$gene)
-    
-    return(height)
+    if(length(values$plot$data$sample) > 0) return(length(values$plot$data$sample) + 1000)
+    if(length(values$plot$data$gene) > 0) return(length(values$plot$data$gene) + 400)
+    else return(100)
   })
   
   output$debug <- renderPrint({
-
+    length(values$plot$data$sample)
   })
-  
-
   
 })

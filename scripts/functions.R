@@ -154,10 +154,11 @@ express_plot <- function(x, gmeans, showmeans){
       facet_grid(group ~ .,
                  scales = "free_y",
                  space = "free_y",
-                 switch = "y", as.table = FALSE) +
+                 switch = 'y', as.table = FALSE) +
       geom_segment(aes(xend = sample, y=0, yend = counts, color = gene),
                    size = 2, alpha = 0.3) +
-      geom_point(shape = 21, size = rel(5), show.legend = FALSE)
+      geom_point(shape = 21, size = rel(5), show.legend = FALSE) +
+      scale_x_discrete(position = 'top')
   }
   
   g + scale_y_log10(breaks = breaks) +
@@ -168,5 +169,10 @@ express_plot <- function(x, gmeans, showmeans){
     theme_classic(16) +
     theme(axis.line.y = element_blank(),
           axis.ticks.y = element_blank(),
-          panel.grid.major.x = element_line(color = 'grey95'))
+          panel.grid.major.x = element_line(color = 'grey95'),
+          axis.title.y = element_blank(),
+          strip.text.y = element_text(angle = 180),
+          strip.background = element_blank(),
+          legend.title = element_blank(),
+          legend.position = 'top')
 }
