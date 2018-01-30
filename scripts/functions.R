@@ -143,12 +143,11 @@ express_plot <- function(x, gmeans, showmeans){
   
   if(showmeans){
     
-    g <- ggplot(data = gmeans, aes(x = group, y = gmean,
-                                   fill = gene)) +
+    g <- ggplot(data = gmeans, aes(x = group, y = gmean, fill = gene)) +
       geom_segment(aes(x=group, xend = group, y=0, yend = gmean, color = gene),
                    size = 2, alpha = 0.2, show.legend = FALSE) +
       geom_point(shape = 21, size = rel(5))
-
+    
   }else{ 
     g <- ggplot(data = x, aes(x = sample, y = counts, fill = gene)) +
       facet_grid(group ~ .,
@@ -156,8 +155,9 @@ express_plot <- function(x, gmeans, showmeans){
                  space = "free_y",
                  switch = 'y', as.table = FALSE) +
       geom_segment(aes(xend = sample, y=0, yend = counts, color = gene),
-                   size = 2, alpha = 0.3) +
-      geom_point(shape = 21, size = rel(5), show.legend = FALSE) +
+                   size = 2, alpha = 0.3, show.legend = FALSE) +
+      geom_point(shape = 21, size = rel(5)) +
+      geom_hline(yintercept = 0) +
       scale_x_discrete(position = 'top')
   }
   
