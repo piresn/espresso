@@ -35,7 +35,7 @@ shinyUI(
                    tags$p(),
 
                    actionButton('go', 'GO'),
-
+                   
                    tags$hr(),
                    
                    tableOutput('geneinfo')

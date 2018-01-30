@@ -75,24 +75,34 @@ shinyServer(function(input, output, session) {
   })
   
   
-  
   #########################################
   
   output$geneinfo <- renderTable({
     infoTable(values$genes, values$ensembl)
   })
   
+
   output$plot <- renderPlot({
     values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans)
     print(values$plot)
-  })
+  }, width = 600, height = exprToFunction(calc_height()))
   
+
   output$sampleTable <- renderDataTable({
     meta[,-1]
   })
   
-  output$debug <- renderPrint({
-    length(values$plot$data$gene)
+  calc_height <- reactive({
+    if(length(values$plot$data$gene) == 0) height <- 100
+    else height <- 8 * length(values$plot$data$gene)
+    
+    return(height)
   })
+  
+  output$debug <- renderPrint({
+
+  })
+  
+
   
 })
