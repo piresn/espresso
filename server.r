@@ -84,7 +84,7 @@ shinyServer(function(input, output, session) {
   #########################################
   
   output$geneinfo <- renderTable({
-    infoTable(values$genes, values$ensembl)
+    infoTable(values$genes, values$dict)
   })
   
 

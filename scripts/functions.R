@@ -71,20 +71,10 @@ create_df <- function(species, genes, ensembl, experiment){
 ###########################################################
 ###########################################################
 
-infoTable <- function(genes, ensembl){
+infoTable <- function(genes, dict){
   
-  out <- data.frame()
+  dict[dict$Ensembl %in% genes, c('Ensembl', 'name')]
   
-  try({
-    out <- getBM(attributes = c("ensembl_gene_id", "external_gene_name"),
-                 filters = "ensembl_gene_id",
-                 values = genes, mart = ensembl)
-    
-    colnames(out) <- c('EnsemblID', 'Symbol')
-  })
-  
-  if(nrow(out) == 0){return(data.frame())}
-  return(out)
 }
 
 ###########################################################
