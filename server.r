@@ -2,6 +2,7 @@ shinyServer(function(input, output, session) {
   
   values <- reactiveValues(plot = NULL,
                            ensembl = NULL,
+                           dict = NULL,
                            # experiment has to be initial input$species
                            experiment = list_projects_sp('mouse'),
                            genes = NULL,
@@ -57,6 +58,10 @@ shinyServer(function(input, output, session) {
                                'mouse' = ensembl_mouse)
     }
     
+    values$dict <- switch(input$species,
+                          'human' = human_dict,
+                          'mouse' = mouse_dict)
+    
     # store Ensembl IDs
     values$genes <- process_ids(input$identif,
                                 input$idtype,
@@ -66,7 +71,7 @@ shinyServer(function(input, output, session) {
     # data for plotting
     values$df <- create_df(input$species,
                            values$genes,
-                           values$ensembl,
+                           values$dict,
                            values$experiment)
     
     # geometric means
@@ -119,7 +124,6 @@ shinyServer(function(input, output, session) {
   
 
   output$debug <- renderPrint({
-    
-   })
+    })
   
 })

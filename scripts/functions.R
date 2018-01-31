@@ -32,21 +32,16 @@ list_projects_sp <- function(sp){
 ###########################################################
 ###########################################################
 
-translate_ensembl <- function(x, ensembl){
+translate_ensembl <- function(x, dict){
   
   out <- c()
   
   for(i in x){
-    a <- ""
-    try(a <- unlist(getBM(attributes = c("external_gene_name"),
-                          filters = "ensembl_gene_id",
-                          values = i, mart = ensembl)), silent = TRUE)
     
-    if(length(a) > 0){
-      out <- c(out, a)
-    } else {
-      out <- c(out, i)
-    }
+    a <- dict[dict$Ensembl == i, 'name']
+    
+    if(length(a) > 0) out <- c(out, a)
+    else out <- c(out, i)
   }
   
   if(length(out) == 0) {return(character(0))}
