@@ -5,9 +5,9 @@ process_ids <- function(input, idtype, dict, max) {
   # limit to max number genes
   x <- x[1:max][!is.na(x[1:max])]
   
-  if(idtype == 'GeneSymbol') out <- dict[toupper(dict$name) %in% toupper(x), 'Ensembl']
+  if(idtype == 'GeneSymbol') x <- dict[toupper(dict$name) %in% toupper(x), 'Ensembl']
   
-  return(out)
+  return(x)
 }
 
 ###########################################################
