@@ -60,10 +60,10 @@ long_format <- function(x){
 ###########################################################
 ###########################################################
 
-create_df <- function(species, genes, ensembl, experiment){
+create_df <- function(species, genes, dict, experiment){
   
   x <- get(species)[genes, ]
-  x$gene <- translate_ensembl(rownames(x), ensembl)
+  x$gene <- translate_ensembl(rownames(x), dict)
   x <- long_format(x)
   x <- subset(x, project %in% experiment)
 }

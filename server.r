@@ -1,7 +1,6 @@
 shinyServer(function(input, output, session) {
   
   values <- reactiveValues(plot = NULL,
-                           ensembl = NULL,
                            dict = NULL,
                            # experiment has to be initial input$species
                            experiment = list_projects_sp('mouse'),
@@ -50,13 +49,6 @@ shinyServer(function(input, output, session) {
   observeEvent(input$go, {
     
     values$plot <- NULL
-    
-    # ensembl mart
-    if(!offline){
-      values$ensembl <- switch(input$species,
-                               'human' = ensembl_human,
-                               'mouse' = ensembl_mouse)
-    }
     
     values$dict <- switch(input$species,
                           'human' = human_dict,
