@@ -65,7 +65,7 @@ shinyServer(function(input, output, session) {
     # store Ensembl IDs
     values$genes <- process_ids(input$identif,
                                 input$idtype,
-                                values$ensembl,
+                                values$dict,
                                 max = 8)
     
     # data for plotting
@@ -124,6 +124,7 @@ shinyServer(function(input, output, session) {
   
 
   output$debug <- renderPrint({
+    values$genes
     })
   
 })

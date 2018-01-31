@@ -1,24 +1,12 @@
 
-process_ids <- function(input, idtype, ensembl, max) {
+process_ids <- function(input, idtype, dict, max) {
   
-  out <- unlist(strsplit(input, split = '\n'))
+  x <- unlist(strsplit(input, split = '\n'))
   # limit to max number genes
-  out <- out[1:max][!is.na(out[1:max])]
+  x <- x[1:max][!is.na(x[1:max])]
   
-  if(idtype == 'GeneSymbol'){
-    try({
-      
-      out <- getBM(attributes = c("ensembl_gene_id", "chromosome_name"),
-                   filters = "external_gene_name",
-                   values = out, mart = ensembl)
-      
-      # only allow genes annotated on the main chromosomes (i.e. remove alternate models on patches and haplotypes)
-      # e.g. ABO has annotation in chromosome '9' and alternate in 'CHR_HG2030_PATCH'
-      out <- subset(out, chromosome_name %in% c('X', 'Y', 'MT', as.character(seq(1, 22))))
-      
-      out <- unlist(out$ensembl_gene_id)
-    })
-  }
+  if(idtype == 'GeneSymbol') out <- dict[toupper(dict$name) %in% toupper(x), 'Ensembl']
+  
   return(out)
 }
 
