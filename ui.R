@@ -1,6 +1,6 @@
 shinyUI(
   navbarPage(
-    "v0.1", theme = shinytheme("flatly"),
+    "v0.1", theme = shinytheme("united"),
     
     tabPanel(
       "Gene expression",
@@ -33,7 +33,7 @@ shinyUI(
                    uiOutput('filter'),
                    
                    tags$p(),
-
+                   
                    actionButton('go', 'GO'),
                    
                    tags$hr(),
@@ -43,11 +43,18 @@ shinyUI(
           ),
           
           column(9,
-                 fluidRow(
-                   
-                   checkboxInput("showmeans", "Show means only", value = FALSE),
-                   
-                   withSpinner(plotOutput('plot'), type = 1)
+                 tabsetPanel(id = 'tabs1',
+                             tabPanel('Plot',
+                                      fluidRow(
+                                        
+                                        checkboxInput("showmeans", "Show means only", value = FALSE),
+                                        
+                                        withSpinner(plotOutput('plot'), type = 1)
+                                      )
+                             ),
+                             tabPanel('Raw',
+                                      DT::dataTableOutput("rawdata")
+                             )
                  )
           )
         )
@@ -61,10 +68,6 @@ shinyUI(
              )
     ),
     
-    tabPanel("Raw data",
-             DT::dataTableOutput("rawdata")
-    ),
-
     tabPanel("Help",
              includeMarkdown("scripts/help.md")
     )

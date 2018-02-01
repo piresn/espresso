@@ -106,16 +106,24 @@ shinyServer(function(input, output, session) {
   })
   
   output$rawdata <- DT::renderDataTable({
-    try(data.frame(gene = values$df$gene,
+    
+    out <- data.frame()
+    
+    try(out <- data.frame(gene = values$df$gene,
                sample = values$df$sample,
-               TPM = round(values$df$counts, 2)))},
+               TPM = round(values$df$counts, 2)))
+    out
+    },
+    rownames = FALSE,
     options = list(
       autoWidth = TRUE,
-      pageLength = 100,
+      pageLength = 25,
       columnDefs = list(list(width = '20px', targets = "_all"))))
+  
     
+  
     output$debug <- renderPrint({
-      head(values$df)
+      #head(values$df)
     })
     
 })
