@@ -71,7 +71,7 @@ shinyServer(function(input, output, session) {
     
   })
   
-
+  
   
   #########################################
   
@@ -79,7 +79,7 @@ shinyServer(function(input, output, session) {
     infoTable(values$genes, values$dict)
   })
   
-
+  
   output$plot <- renderPlot({
     values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans)
     print(values$plot)
@@ -105,18 +105,17 @@ shinyServer(function(input, output, session) {
     meta[,-1]
   })
   
-  output$allmouse <- DT::renderDataTable({
-    round(mouse, 2)},
-    options = list(pageLength = 10))
-  
-  output$allhuman <- DT::renderDataTable({
-    round(human, 2)},
-    options = list(pageLength = 10))
-  
-  
-
-  output$debug <- renderPrint({
-    values$genes
+  output$rawdata <- DT::renderDataTable({
+    try(data.frame(gene = values$df$gene,
+               sample = values$df$sample,
+               TPM = round(values$df$counts, 2)))},
+    options = list(
+      autoWidth = TRUE,
+      pageLength = 100,
+      columnDefs = list(list(width = '20px', targets = "_all"))))
+    
+    output$debug <- renderPrint({
+      head(values$df)
     })
-  
+    
 })

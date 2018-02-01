@@ -54,21 +54,17 @@ shinyUI(
       )
     ),
     
-    tabPanel("Samples",
+    tabPanel("Samples info",
              dataTableOutput("sampleTable"),
              helpText(paste(c('Database created:', timestamp),
                             collapse = ' ')
              )
     ),
     
-    tabPanel("Mouse data",
-             DT::dataTableOutput("allmouse")
+    tabPanel("Raw data",
+             DT::dataTableOutput("rawdata")
     ),
-    
-    tabPanel("Human data",
-             DT::dataTableOutput("allhuman")
-    ),
-    
+
     tabPanel("Help",
              includeMarkdown("scripts/help.md")
     )
