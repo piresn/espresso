@@ -1,0 +1,11 @@
+.checkbox {
+  text-align: right;
+  padding: 10px;
+
+}
+
+.shiny-output-error-validation{
+  color: lightgrey;
+  text-align: center;
+  padding: 100px;
+}

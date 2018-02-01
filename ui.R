@@ -6,8 +6,9 @@ shinyUI(
       "Gene expression",
       fluidPage(
         
-        # includeCSS("www/styles.css"),
         useShinyjs(),
+        
+        includeCSS("www/styles.css"),
         
         fluidRow(
           # shinythemes::themeSelector(),
