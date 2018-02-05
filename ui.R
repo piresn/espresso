@@ -34,6 +34,13 @@ shinyUI(
                    uiOutput('filter'),
                    
                    tags$p(),
+
+                   actionLink('showoptions', 'More options',
+                              icon = icon('cogs')),
+                   
+                   uiOutput('options'),
+                   
+                   tags$p(),
                    
                    actionButton('go', 'GO'),
                    

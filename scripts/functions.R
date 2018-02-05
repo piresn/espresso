@@ -60,12 +60,16 @@ long_format <- function(x){
 ###########################################################
 ###########################################################
 
-create_df <- function(species, genes, dict, experiment){
+create_df <- function(species, genes, dict, experiment, removeoutliers){
   
   x <- get(species)[genes, ]
   x$gene <- translate_ensembl(rownames(x), dict)
   x <- long_format(x)
   x <- subset(x, project %in% experiment)
+  
+  if(removeoutliers){x <- x[!x$sample %in% outliers,]}
+  
+  return(x)
 }
 
 ###########################################################

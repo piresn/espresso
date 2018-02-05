@@ -30,6 +30,23 @@ shinyServer(function(input, output, session) {
     shinyjs::toggle(id = "filt_panel")
   })
   
+  
+  output$options <- renderUI({
+    
+    shinyjs::hidden(
+      wellPanel(id = "opt_panel",
+                div(checkboxInput("removeoutliers", "Remove outlier samples:", value = TRUE),
+                    style= 'color: grey; font-size:90%'),
+                helpText(outliers, style = 'font-size:80%;')
+                )
+      )
+  })
+
+  observeEvent(input$showoptions, {
+    shinyjs::toggle(id = "opt_panel")
+  })
+  
+  
   #############################################
   
   observeEvent(input$species, {
@@ -64,7 +81,8 @@ shinyServer(function(input, output, session) {
     values$df <- create_df(input$species,
                            values$genes,
                            values$dict,
-                           values$experiment)
+                           values$experiment,
+                           input$removeoutliers)
     
     # geometric means
     values$gmeans <- calc_gmeans(values$df)
