@@ -82,8 +82,9 @@ shinyServer(function(input, output, session) {
   
   output$plot <- renderPlot({
     values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans)
-    print(values$plot)
-  }, width = exprToFunction(calc_width()),
+    values$plot
+  },
+  width = exprToFunction(calc_width()),
   height = exprToFunction(calc_height())
   )
   
@@ -109,21 +110,22 @@ shinyServer(function(input, output, session) {
     
     out <- data.frame()
     
-    try(out <- data.frame(gene = values$df$gene,
-               sample = values$df$sample,
-               TPM = round(values$df$counts, 2)))
+    try(out <- data.frame(Project = values$df$project,
+                          Group = values$df$group,
+                          Sample = values$df$sample,
+                          Gene = values$df$gene,
+                          TPM = round(values$df$counts, 2)))
     out
-    },
-    rownames = FALSE,
-    options = list(
-      autoWidth = TRUE,
-      pageLength = 25,
-      columnDefs = list(list(width = '20px', targets = "_all"))))
+  },
+  rownames = FALSE,
+  options = list(
+    autoWidth = TRUE,
+    pageLength = 25,
+    columnDefs = list(list(width = '20px', targets = "_all"))))
   
-    
   
-    output$debug <- renderPrint({
-      #head(values$df)
+  
+  output$debug <- renderPrint({
     })
     
 })
