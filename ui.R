@@ -48,7 +48,8 @@ shinyUI(
                              tabPanel('Plot',
                                       fluidRow(
                                         
-                                        checkboxInput("showmeans", "Show means only", value = FALSE),
+                                        div(checkboxInput("showmeans", "Show means only", value = FALSE),
+                                            style = 'text-align: center; padding: 20px'),
                                         
                                         withSpinner(plotOutput('plot'), type = 1)
                                       )
