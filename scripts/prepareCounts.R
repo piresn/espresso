@@ -153,6 +153,9 @@ sample_id <- read.csv("metadata/sampleID.csv")
 samples <- read.csv("metadata/samples.csv")
 meta <- merge(samples, sample_id, by = 'group_id')
 
+# outliers
+outliers <- scan('metadata/outliers.txt', what = character())
+
 
 
 
@@ -167,4 +170,4 @@ human_dict <- translate(rownames(human), mart = useEnsembl("ensembl", dataset = 
 
 timestamp <- format(Sys.time(), "%b %d %Y")
 
-save(mouse, human, meta, mouse_dict, human_dict, timestamp, file = save_output)
+save(mouse, human, meta, mouse_dict, human_dict, outliers, timestamp, file = save_output)

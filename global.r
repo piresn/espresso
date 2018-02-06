@@ -20,8 +20,6 @@ initial_sel_genes <- "UCP1\nAXL"
 
 load('data/data.Rdata')
 
-### outlier samples:
-outliers <-  as.character(subset(meta, flag == 'outlier')$sample)
 
 #################################
 # development
