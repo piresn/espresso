@@ -13,7 +13,8 @@ mouse_projs <- paste0(c('p2148_order3543',
                         'p2148_order3826',
                         'p2148_order3827',
                         'p2148_order3888_mouse',
-                        '~/polybox/Lisi/mapping'),
+                        '~/polybox/Lisi/mapping',
+                        '~/polybox/Wenfei_Feb2018/mapping'),
                       suffix)
 
 human_projs <- paste0(c('p1830_order1477',
