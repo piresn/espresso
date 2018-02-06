@@ -35,17 +35,23 @@ shinyServer(function(input, output, session) {
     
     shinyjs::hidden(
       wellPanel(id = "opt_panel",
-                div(checkboxInput("removeoutliers", "Remove outlier samples:", value = TRUE),
-                    style= 'color: grey; font-size:90%'),
-                helpText(outliers, style = 'font-size:80%;')
+
+                div(selectizeInput('outliers_list', 'Remove outlier samples:',
+                               choices = meta$sample, selected = outliers, multiple = TRUE),
+                    style = 'color: grey; font-size: 90%'),
+                
+                actionLink('reset_outliers', 'Reset')
                 )
       )
+  })
+  
+  observeEvent(input$reset_outliers, {
+    updateSelectizeInput(session, 'outliers_list', selected = outliers)
   })
 
   observeEvent(input$showoptions, {
     shinyjs::toggle(id = "opt_panel")
   })
-  
   
   #############################################
   
@@ -82,7 +88,7 @@ shinyServer(function(input, output, session) {
                            values$genes,
                            values$dict,
                            values$experiment,
-                           input$removeoutliers)
+                           input$outliers_list)
     
     # geometric means
     values$gmeans <- calc_gmeans(values$df)
