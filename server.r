@@ -18,10 +18,17 @@ shinyServer(function(input, output, session) {
     
     shinyjs::hidden(
       wellPanel(id = "filt_panel",
-                checkboxGroupInput('experiment', NULL,
-                                   choices = list_projects_sp(input$species),
-                                   selected = list_projects_sp(input$species)
-                )
+                div(checkboxGroupInput('experiment', 'Include projects:',
+                                       choices = list_projects_sp(input$species),
+                                       selected = list_projects_sp(input$species)),
+                    style = 'color: grey; font-size: 90%'),
+                
+                tags$hr(),
+                
+                div(selectizeInput('outliers_list', 'Remove outlier samples:',
+                                   choices = meta$sample, selected = outliers, multiple = TRUE),
+                    actionLink('reset_outliers', 'Reset'),
+                    style = 'color: grey; font-size: 90%')
       )
     )
   })
@@ -31,27 +38,10 @@ shinyServer(function(input, output, session) {
   })
   
   
-  output$options <- renderUI({
-    
-    shinyjs::hidden(
-      wellPanel(id = "opt_panel",
-
-                div(selectizeInput('outliers_list', 'Remove outlier samples:',
-                               choices = meta$sample, selected = outliers, multiple = TRUE),
-                    style = 'color: grey; font-size: 90%'),
-                
-                actionLink('reset_outliers', 'Reset')
-                )
-      )
-  })
-  
   observeEvent(input$reset_outliers, {
     updateSelectizeInput(session, 'outliers_list', selected = outliers)
   })
-
-  observeEvent(input$showoptions, {
-    shinyjs::toggle(id = "opt_panel")
-  })
+  
   
   #############################################
   
@@ -124,11 +114,16 @@ shinyServer(function(input, output, session) {
     else return(18 * length(unique(values$plot$data$sample)) + 100)
   })
   
+  
   #########################################
   
   output$sampleTable <- renderDataTable({
     meta[,-1]
   })
+  
+  
+  #########################################
+  
   
   output$rawdata <- DT::renderDataTable({
     
@@ -150,6 +145,6 @@ shinyServer(function(input, output, session) {
   
   
   output$debug <- renderPrint({
-    })
-    
+  })
+  
 })

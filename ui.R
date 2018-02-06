@@ -28,17 +28,11 @@ shinyUI(
                    radioButtons('species', 'Species', c('mouse', 'human'),
                                 inline = TRUE),
                    
-                   actionLink('showfilter', 'Filter datasets',
-                              icon = icon('sort-down')),
+                   actionLink('showfilter', 'Filter samples',
+                              #icon = icon('th-list')),
+                              icon = icon('wrench')),
                    
                    uiOutput('filter'),
-                   
-                   tags$p(),
-
-                   actionLink('showoptions', 'More options',
-                              icon = icon('cogs')),
-                   
-                   uiOutput('options'),
                    
                    tags$p(),
                    
