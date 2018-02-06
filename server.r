@@ -49,10 +49,7 @@ shinyServer(function(input, output, session) {
     values$experiment <- list_projects_sp(input$species)
   })
   
-  # observeEvent(input$experiment, {
-  #   values$experiment <- input$experiment
-  # })
-  
+
   observe({
     values$experiment <- input$experiment
   })
