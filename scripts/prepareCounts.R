@@ -156,7 +156,9 @@ human_RPKM <- as.data.frame(rpkm(DGEList(human, genes = data.frame(length = gene
 ### import meta data
 sample_id <- read.csv("metadata/sampleID.csv")
 samples <- read.csv("metadata/samples.csv")
+FGCZ <- read.csv("metadata/FGCZ.csv")
 meta <- merge(samples, sample_id, by = 'group_id')
+meta <- merge(meta, FGCZ, by = 'source')
 
 # outliers
 outliers <- scan('metadata/outliers.txt', what = character())
