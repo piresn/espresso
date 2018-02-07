@@ -48,17 +48,16 @@ shinyUI(
           ),
           
           column(9,
+                 div(checkboxInput("showmeans", "Plot means", value = FALSE),
+                     style = 'text-align: center; padding-top: 10px'),
+                 
                  tabsetPanel(id = 'tabs1',
                              tabPanel('Plot',
                                       fluidRow(
-                                        
-                                        div(checkboxInput("showmeans", "Show means only", value = FALSE),
-                                            style = 'text-align: center; padding: 20px'),
-                                        
                                         withSpinner(plotOutput('plot'), type = 1)
                                       )
                              ),
-                             tabPanel('Raw',
+                             tabPanel('Table',
                                       DT::dataTableOutput("rawdata")
                              )
                  )
