@@ -78,7 +78,7 @@ create_df <- function(species, metric, genes, dict, experiment, outliers_list){
 
 infoTable <- function(genes, dict){
   
-  dict[dict$Ensembl %in% genes, c('Ensembl', 'name')]
+  dict[dict$Ensembl %in% genes, c('name', 'Ensembl')]
   
 }
 
