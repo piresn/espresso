@@ -2,6 +2,7 @@ shinyServer(function(input, output, session) {
   
   values <- reactiveValues(plot = NULL,
                            dict = NULL,
+                           table = NULL,
                            # experiment has to be initial input$species
                            experiment = list_projects_sp('mouse'),
                            metric = 'TPM',
@@ -129,28 +130,55 @@ shinyServer(function(input, output, session) {
     meta[,-1]
   })
   
+  #########################################
+  
+  observeEvent(input$go, {
+    
+    if(input$showmeans){
+      
+      values$table <- data.frame(Sample = values$gmeans$group,
+                                Gene = values$gmeans$gene,
+                                count = round(values$gmeans$gmean, 2))
+      
+      
+    }else{
+      
+      values$table <- data.frame(Project = values$df$project,
+                                Group = values$df$group,
+                                Sample = values$df$sample,
+                                Gene = values$df$gene,
+                                count = round(values$df$counts, 2))
+    }
+    
+    try(colnames(values$table)[colnames(values$table) == 'count'] <- values$metric)
+    
+  })
+  
   
   #########################################
   
-  
   output$rawdata <- DT::renderDataTable({
-    
-    out <- data.frame()
-    
-    try(out <- data.frame(Project = values$df$project,
-                          Group = values$df$group,
-                          Sample = values$df$sample,
-                          Gene = values$df$gene,
-                          TPM = round(values$df$counts, 2)))
-    out
+    values$table
   },
   rownames = FALSE,
   options = list(
     autoWidth = TRUE,
     pageLength = 25,
-    columnDefs = list(list(width = '20px', targets = "_all"))))
+    columnDefs = list(list(width = '20px', targets = "_all"))))  
   
   
+  #########################################
+  
+  
+  output$download <- downloadHandler(
+    filename = function(){paste0(values$metric, "s.csv")},
+    content = function(file){
+      write.csv(values$table, file, quote = FALSE, row.names = FALSE)
+    }
+  )
+  
+  ###############################
+  ###########################
   
   output$debug <- renderPrint({
     

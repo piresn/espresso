@@ -32,7 +32,6 @@ shinyUI(
                                 inline = FALSE),
                    
                    actionLink('showfilter', 'Filter samples',
-                              #icon = icon('th-list')),
                               icon = icon('wrench')),
                    
                    uiOutput('filter'),
@@ -57,9 +56,12 @@ shinyUI(
                                         withSpinner(plotOutput('plot'), type = 1)
                                       )
                              ),
+                             
                              tabPanel('Table',
-                                      DT::dataTableOutput("rawdata")
-                             )
+                                      DT::dataTableOutput("rawdata"),
+                                      
+                                      downloadLink('download',"Download")
+                                      )
                  )
           )
         )
