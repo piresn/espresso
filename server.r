@@ -90,52 +90,7 @@ shinyServer(function(input, output, session) {
     # geometric means
     values$gmeans <- calc_gmeans(values$df)
     
-  })
-  
-  
-  
-  #########################################
-  
-  output$geneinfo <- DT::renderDataTable({
-    infoTable(values$genes, values$dict, values$species)
-  },
-  rownames = FALSE,
-  escape = FALSE,
-  options = list(dom = 't',
-                 ordering = FALSE))
-  
-  
-  
-  output$plot <- renderPlot({
-    values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans, metric = values$metric)
-    values$plot
-  },
-  width = exprToFunction(calc_width()),
-  height = exprToFunction(calc_height())
-  )
-  
-  #########################################
-  
-  calc_width <- reactive({
-    if(input$showmeans) return(600)
-    else return(800)
-  })
-  
-  calc_height <- reactive({
-    if(input$showmeans) return(18 * length(unique(values$plot$data$group)) + 150)
-    else return(18 * length(unique(values$plot$data$sample)) + 100)
-  })
-  
-  
-  #########################################
-  
-  output$sampleTable <- renderDataTable({
-    meta[,-1]
-  })
-  
-  #########################################
-  
-  observeEvent(input$go, {
+    #########################
     
     if(input$showmeans){
       
@@ -158,6 +113,40 @@ shinyServer(function(input, output, session) {
   })
   
   
+  
+  #########################################
+  #########################################
+  
+  output$geneinfo <- DT::renderDataTable({
+    infoTable(values$genes, values$dict, values$species)
+  },
+  rownames = FALSE,
+  escape = FALSE,
+  options = list(dom = 't',
+                 ordering = FALSE))
+  
+  #########################################
+  
+  output$plot <- renderPlot({
+    values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans, metric = values$metric)
+    values$plot
+  },
+  width = exprToFunction(calc_width()),
+  height = exprToFunction(calc_height())
+  )
+  
+
+  calc_width <- reactive({
+    if(input$showmeans) return(600)
+    else return(800)
+  })
+  
+  calc_height <- reactive({
+    if(input$showmeans) return(18 * length(unique(values$plot$data$group)) + 150)
+    else return(18 * length(unique(values$plot$data$sample)) + 100)
+  })
+  
+  
   #########################################
   
   output$rawdata <- DT::renderDataTable({
@@ -169,10 +158,7 @@ shinyServer(function(input, output, session) {
     pageLength = 25,
     columnDefs = list(list(width = '20px', targets = "_all"))))  
   
-  
-  #########################################
-  
-  
+
   output$download <- downloadHandler(
     filename = function(){paste0(values$metric, "s.csv")},
     content = function(file){
@@ -180,9 +166,16 @@ shinyServer(function(input, output, session) {
     }
   )
   
-  ###############################
-  ###########################
   
+  #########################################
+  
+  output$sampleTable <- renderDataTable({
+    meta[,-1]
+  })
+  
+
+  ###############################
+
   output$debug <- renderPrint({
     
   })

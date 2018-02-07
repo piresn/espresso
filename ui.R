@@ -33,14 +33,14 @@ shinyUI(
                    ),
                    
                    
+                   radioButtons('metric', 'Metric', c('TPM (recommended)', 'RPKM'),
+                                inline = FALSE),
 
                    actionButton('go', 'GO', width = '100%'),
 
                    div(checkboxInput("showmeans", "Calculate means", value = FALSE),
                        style = 'font-weight: bold; padding-top: 10px'),
-                   
-                   radioButtons('metric', 'Metric', c('TPM (recommended)', 'RPKM'),
-                                inline = FALSE),
+
                    
                    actionLink('showfilter', 'Filter samples',
                               icon = icon('wrench')),
