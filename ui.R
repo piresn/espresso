@@ -26,10 +26,10 @@ shinyUI(
                                 inline = TRUE),
                    
                    radioButtons('species', 'Species', c('mouse', 'human'),
-                                inline = TRUE),
+                                inline = FALSE),
                    
                    radioButtons('metric', 'Metric', c('TPM (recommended)', 'RPKM'),
-                                inline = TRUE),
+                                inline = FALSE),
                    
                    actionLink('showfilter', 'Filter samples',
                               #icon = icon('th-list')),
@@ -43,7 +43,7 @@ shinyUI(
                    
                    tags$hr(),
                    
-                   tableOutput('geneinfo')
+                   DT::dataTableOutput('geneinfo')
                  )
           ),
           

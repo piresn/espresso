@@ -76,10 +76,24 @@ create_df <- function(species, metric, genes, dict, experiment, outliers_list){
 ###########################################################
 ###########################################################
 
-infoTable <- function(genes, dict){
+infoTable <- function(genes = NULL, dict = NULL){
   
-  dict[dict$Ensembl %in% genes, c('name', 'Ensembl')]
-  
+  if(!is.null(genes) & !is.null(dict)){
+    
+    out <- dict[dict$Ensembl %in% genes, c('name', 'Ensembl')]
+    
+    if(nrow(out) > 0){
+      
+      out$NCBI <- paste0('<a target = "_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=',
+                         out$Ensembl,'">',
+                         'NCBI', '</a>')
+      
+      out$Ensembl <- paste0('<a target = "_blank" href="https://www.ensembl.org/Mus_musculus/Gene/Compara_Ortholog?db=core;g=',
+                            out$Ensembl,'">',
+                            out$Ensembl, '</a>')
+    }
+    return(out)
+  }
 }
 
 ###########################################################

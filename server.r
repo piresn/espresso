@@ -50,7 +50,7 @@ shinyServer(function(input, output, session) {
     values$experiment <- list_projects_sp(input$species)
   })
   
-
+  
   observe({
     values$experiment <- input$experiment
   })
@@ -92,9 +92,14 @@ shinyServer(function(input, output, session) {
   
   #########################################
   
-  output$geneinfo <- renderTable({
+  output$geneinfo <- DT::renderDataTable({
     infoTable(values$genes, values$dict)
-  })
+  },
+  rownames = FALSE,
+  escape = FALSE,
+  options = list(dom = 't',
+                 ordering = FALSE))
+  
   
   
   output$plot <- renderPlot({
@@ -148,7 +153,7 @@ shinyServer(function(input, output, session) {
   
   
   output$debug <- renderPrint({
-
+    
   })
   
 })
