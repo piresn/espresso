@@ -143,10 +143,13 @@ gene_lengths_human <- import_gene_lengths(human_projs[1])
 
 
 ### Calculate TPMs
-mouse <- tpm(DGEList(mouse, genes = data.frame(length = gene_lengths_mouse)))
-human <- tpm(DGEList(human, genes = data.frame(length = gene_lengths_human)))
+mouse_TPM <- tpm(DGEList(mouse, genes = data.frame(length = gene_lengths_mouse)))
+human_TPM <- tpm(DGEList(human, genes = data.frame(length = gene_lengths_human)))
 
+### Calculate RPKM
 
+mouse_RPKM <- as.data.frame(rpkm(DGEList(mouse, genes = data.frame(length = gene_lengths_mouse))))
+human_RPKM <- as.data.frame(rpkm(DGEList(human, genes = data.frame(length = gene_lengths_human))))
 
 
 ### import meta data
@@ -171,4 +174,4 @@ human_dict <- translate(rownames(human), mart = useEnsembl("ensembl", dataset = 
 
 timestamp <- format(Sys.time(), "%b %d %Y")
 
-save(mouse, human, meta, mouse_dict, human_dict, outliers, timestamp, file = save_output)
+save(mouse_TPM, human_TPM, mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers, timestamp, file = save_output)

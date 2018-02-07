@@ -28,6 +28,9 @@ shinyUI(
                    radioButtons('species', 'Species', c('mouse', 'human'),
                                 inline = TRUE),
                    
+                   radioButtons('metric', 'Metric', c('TPM (recommended)', 'RPKM'),
+                                inline = TRUE),
+                   
                    actionLink('showfilter', 'Filter samples',
                               #icon = icon('th-list')),
                               icon = icon('wrench')),

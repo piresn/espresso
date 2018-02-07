@@ -60,9 +60,9 @@ long_format <- function(x){
 ###########################################################
 ###########################################################
 
-create_df <- function(species, genes, dict, experiment, outliers_list){
+create_df <- function(species, metric, genes, dict, experiment, outliers_list){
   
-  x <- get(species)[genes, ]
+  x <- get(paste(species, metric, sep = '_'))[genes, ]
   x$gene <- translate_ensembl(rownames(x), dict)
   x <- long_format(x)
   x <- subset(x, project %in% experiment)
@@ -110,7 +110,7 @@ calc_gmeans <- function(x){
 ###########################################################
 ###########################################################
 
-express_plot <- function(x, gmeans, showmeans){
+express_plot <- function(x, gmeans, showmeans, metric){
   
   breaks <- c(1 %o% 10^(-1:6))
   
@@ -118,6 +118,11 @@ express_plot <- function(x, gmeans, showmeans){
   
   # match order groups between samples and replicate means
   x$group <- factor(x$group, levels = levels(gmeans$group))
+  
+  # X axis title
+  axis_title <- switch(metric,
+                       'TPM' = 'TPM (transcripts per million)',
+                       'RPKM' = 'RPKM (Reads Per Kilobase Million)')
   
   if(showmeans){
     
@@ -142,7 +147,7 @@ express_plot <- function(x, gmeans, showmeans){
   g + scale_y_log10(breaks = breaks, expand = c(0.05, 0),
                     labels = function(n){
                       format(n, drop0trailing = TRUE, scientific = FALSE)},
-                    name = 'TPM (transcripts per million)') +
+                    name = axis_title) +
     expand_limits(y = 0.1) +
     scale_fill_brewer(palette = 'Dark2') +
     scale_color_brewer(palette = 'Dark2') +

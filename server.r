@@ -4,6 +4,7 @@ shinyServer(function(input, output, session) {
                            dict = NULL,
                            # experiment has to be initial input$species
                            experiment = list_projects_sp('mouse'),
+                           metric = 'TPM',
                            genes = NULL,
                            df = NULL,
                            gmeans = NULL)
@@ -64,6 +65,10 @@ shinyServer(function(input, output, session) {
                           'human' = human_dict,
                           'mouse' = mouse_dict)
     
+    values$metric <- switch(input$metric,
+                            'TPM (recommended)' = 'TPM',
+                            'RPKM' = 'RPKM')
+    
     # store Ensembl IDs
     values$genes <- process_ids(input$identif,
                                 input$idtype,
@@ -72,6 +77,7 @@ shinyServer(function(input, output, session) {
     
     # data for plotting
     values$df <- create_df(input$species,
+                           values$metric,
                            values$genes,
                            values$dict,
                            values$experiment,
@@ -92,7 +98,7 @@ shinyServer(function(input, output, session) {
   
   
   output$plot <- renderPlot({
-    values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans)
+    values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans, metric = values$metric)
     values$plot
   },
   width = exprToFunction(calc_width()),
@@ -142,6 +148,7 @@ shinyServer(function(input, output, session) {
   
   
   output$debug <- renderPrint({
+
   })
   
 })
