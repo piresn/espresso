@@ -38,8 +38,8 @@ shinyUI(
 
                    actionButton('go', 'GO', width = '100%'),
 
-                   div(checkboxInput("showmeans", "Calculate means", value = FALSE),
-                       style = 'font-weight: bold; padding-top: 10px'),
+                   div(checkboxInput("showmeans", 'Calculate means', value = FALSE),
+                       style = 'padding-top: 10px; padding-bottom: 10px'),
 
                    
                    actionLink('showfilter', 'Filter samples',
