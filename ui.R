@@ -14,19 +14,30 @@ shinyUI(
           # shinythemes::themeSelector(),
           verbatimTextOutput('debug'),
           
-          column(3,
+          column(2,
                  fluidRow(
                    
-                   helpText('Enter up to 8 genes:'),
-                   textAreaInput('identif', NULL, rows = 2, resize = 'vertical',
-                                 value = initial_sel_genes,
-                                 width = '85%'),
+                   wellPanel(
+                     
+                     helpText('Enter up to 8 genes:'),
+                     textAreaInput('identif', NULL, rows = 2, resize = 'vertical',
+                                   value = initial_sel_genes,
+                                   width = '85%'),
+                     
+                     radioButtons('idtype', NULL, c('GeneSymbol', 'EnsemblID'),
+                                  inline = TRUE),
+                     
+                     
+                     radioButtons('species', 'Species', c('mouse', 'human'),
+                                  inline = TRUE)
+                   ),
                    
-                   radioButtons('idtype', NULL, c('GeneSymbol', 'EnsemblID'),
-                                inline = TRUE),
                    
-                   radioButtons('species', 'Species', c('mouse', 'human'),
-                                inline = FALSE),
+
+                   actionButton('go', 'GO', width = '100%'),
+
+                   div(checkboxInput("showmeans", "Calculate means", value = FALSE),
+                       style = 'font-weight: bold; padding-top: 10px'),
                    
                    radioButtons('metric', 'Metric', c('TPM (recommended)', 'RPKM'),
                                 inline = FALSE),
@@ -38,18 +49,14 @@ shinyUI(
                    
                    tags$p(),
                    
-                   actionButton('go', 'GO'),
-                   
                    tags$hr(),
                    
                    DT::dataTableOutput('geneinfo')
                  )
           ),
           
-          column(9,
-                 div(checkboxInput("showmeans", "Plot means", value = FALSE),
-                     style = 'text-align: center; padding-top: 10px'),
-                 
+          column(10,
+
                  tabsetPanel(id = 'tabs1',
                              tabPanel('Plot',
                                       fluidRow(
@@ -61,7 +68,7 @@ shinyUI(
                                       DT::dataTableOutput("rawdata"),
                                       
                                       downloadLink('download',"Download")
-                                      )
+                             )
                  )
           )
         )
