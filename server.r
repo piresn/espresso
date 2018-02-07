@@ -3,6 +3,7 @@ shinyServer(function(input, output, session) {
   values <- reactiveValues(plot = NULL,
                            dict = NULL,
                            table = NULL,
+                           species = 'mouse',
                            # experiment has to be initial input$species
                            experiment = list_projects_sp('mouse'),
                            metric = 'TPM',
@@ -60,6 +61,8 @@ shinyServer(function(input, output, session) {
   
   observeEvent(input$go, {
     
+    values$species <- input$species
+    
     values$plot <- NULL
     
     values$dict <- switch(input$species,
@@ -77,7 +80,7 @@ shinyServer(function(input, output, session) {
                                 max = 8)
     
     # data for plotting
-    values$df <- create_df(input$species,
+    values$df <- create_df(values$species,
                            values$metric,
                            values$genes,
                            values$dict,
@@ -94,7 +97,7 @@ shinyServer(function(input, output, session) {
   #########################################
   
   output$geneinfo <- DT::renderDataTable({
-    infoTable(values$genes, values$dict)
+    infoTable(values$genes, values$dict, values$species)
   },
   rownames = FALSE,
   escape = FALSE,
@@ -137,17 +140,17 @@ shinyServer(function(input, output, session) {
     if(input$showmeans){
       
       values$table <- data.frame(Sample = values$gmeans$group,
-                                Gene = values$gmeans$gene,
-                                count = round(values$gmeans$gmean, 2))
+                                 Gene = values$gmeans$gene,
+                                 count = round(values$gmeans$gmean, 2))
       
       
     }else{
       
       values$table <- data.frame(Project = values$df$project,
-                                Group = values$df$group,
-                                Sample = values$df$sample,
-                                Gene = values$df$gene,
-                                count = round(values$df$counts, 2))
+                                 Group = values$df$group,
+                                 Sample = values$df$sample,
+                                 Gene = values$df$gene,
+                                 count = round(values$df$counts, 2))
     }
     
     try(colnames(values$table)[colnames(values$table) == 'count'] <- values$metric)
