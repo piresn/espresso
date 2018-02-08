@@ -26,8 +26,20 @@ human_projs <- paste0(c('p1830_order1477',
                         'p1830_order2209'),
                       suffix)
 
+### import meta data
+sample_id <- read.csv("metadata/sampleID.csv")
+samples <- read.csv("metadata/samples.csv")
+FGCZ <- read.csv("metadata/FGCZ.csv")
+meta <- merge(samples, sample_id, by = 'group_id')
+meta <- merge(meta, FGCZ, by = 'source')
+
+# outliers
+outliers <- scan('metadata/outliers.txt', what = character())
+
+
 # set file where to save data
 save_output <- '~/polybox/DatasetViz/RNAseqVizApp/data/data.Rdata'
+
 
 ################################################################
 # function to import counts from FeatureCounts output
@@ -101,7 +113,7 @@ tpm <- function(x){
 }
 
 ################################################################
-# function to get gene names from BiomaRt
+# Function to get gene names from BiomaRt
 ################################################################
 
 translate <- function(x, mart){
@@ -143,7 +155,6 @@ gene_lengths_human <- import_gene_lengths(human_projs[1])
 
 
 
-
 ### Calculate TPMs
 mouse_TPM <- tpm(DGEList(mouse, genes = data.frame(length = gene_lengths_mouse)))
 human_TPM <- tpm(DGEList(human, genes = data.frame(length = gene_lengths_human)))
@@ -152,17 +163,6 @@ human_TPM <- tpm(DGEList(human, genes = data.frame(length = gene_lengths_human))
 
 mouse_RPKM <- as.data.frame(rpkm(DGEList(mouse, genes = data.frame(length = gene_lengths_mouse))))
 human_RPKM <- as.data.frame(rpkm(DGEList(human, genes = data.frame(length = gene_lengths_human))))
-
-
-### import meta data
-sample_id <- read.csv("metadata/sampleID.csv")
-samples <- read.csv("metadata/samples.csv")
-FGCZ <- read.csv("metadata/FGCZ.csv")
-meta <- merge(samples, sample_id, by = 'group_id')
-meta <- merge(meta, FGCZ, by = 'source')
-
-# outliers
-outliers <- scan('metadata/outliers.txt', what = character())
 
 
 

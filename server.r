@@ -135,7 +135,7 @@ shinyServer(function(input, output, session) {
   height = exprToFunction(calc_height())
   )
   
-
+  
   calc_width <- reactive({
     if(input$showmeans) return(600)
     else return(800)
@@ -158,7 +158,7 @@ shinyServer(function(input, output, session) {
     pageLength = 25,
     columnDefs = list(list(width = '20px', targets = "_all"))))  
   
-
+  
   output$download <- downloadHandler(
     filename = function(){paste0(values$metric, "s.csv")},
     content = function(file){
@@ -170,14 +170,20 @@ shinyServer(function(input, output, session) {
   #########################################
   
   output$sampleTable <- renderDataTable({
-    meta[,-1]
-  })
+    out <- meta[,-c(1:2)]
+    out$FGCZ <- paste0('<a target = "_blank" href=',
+                       paste0('https://fgcz-sushi.uzh.ch', substring(out$Bfabrik, 18)),
+                       '>', sapply(strsplit(as.character(out$Bfabrik), '/'), tail, n = 1),'</a>')
+    out$Bfabrik <- NULL
+    out
+  },
+  escape = FALSE)
   
-
+  
   ###############################
-
+  
   output$debug <- renderPrint({
-    
+
   })
   
 })
