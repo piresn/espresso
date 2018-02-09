@@ -1,44 +1,18 @@
-library(edgeR)
-library(biomaRt)
+# run from the command line:
+#
+#   Rscript prepareCounts.R input_files.yaml
+#
+#
+
+library(edgeR, quietly = TRUE)
+library(biomaRt, quietly = TRUE)
+library(yaml)
 
 
-# set location of count and metadata
-setwd('~/polybox/DatasetViz/mapping/')
-
-
-# location of output.tab file from feature counts
-suffix <- "/results/counts/output.tab"
-
-mouse_projs <- paste0(c('p2148_order3543',
-                        'p2148_order3826',
-                        'p2148_order3827',
-                        'p2148_order3888_mouse',
-                        'p1801_order1457',
-                        'p1973_order1869',
-                        '~/polybox/Lisi/mapping',
-                        '~/polybox/Wenfei_Feb2018/mapping'),
-                      suffix)
-
-human_projs <- paste0(c('p1830_order1477',
-                        'p1830_order1700',
-                        'p1830_order2012_Miro',
-                        'p2148_order3888_human',
-                        'p1830_order2209'),
-                      suffix)
-
-### import meta data
-sample_id <- read.csv("metadata/sampleID.csv")
-samples <- read.csv("metadata/samples.csv")
-FGCZ <- read.csv("metadata/FGCZ.csv")
-meta <- merge(samples, sample_id, by = 'group_id')
-meta <- merge(meta, FGCZ, by = 'source')
-
-# outliers
-outliers <- scan('metadata/outliers.txt', what = character())
-
-
-# set file where to save data
-save_output <- '~/polybox/DatasetViz/RNAseqVizApp/data/data.Rdata'
+# yaml file with input file locations
+args <- commandArgs(TRUE)
+inputs <- read_yaml(args[1])
+#inputs <- read_yaml('~/polybox/DatasetViz/mapping/metadata/input_files.yaml')
 
 
 ################################################################
@@ -113,7 +87,7 @@ tpm <- function(x){
 }
 
 ################################################################
-# Function to get gene names from BiomaRt
+# function to get gene names from BiomaRt
 ################################################################
 
 translate <- function(x, mart){
@@ -142,16 +116,17 @@ translate <- function(x, mart){
 ################################################################
 
 ### import read counts
-mouse <- combine_by_species(mouse_projs)
-human <- combine_by_species(human_projs)
+mouse <- combine_by_species(inputs$mouse)
+human <- combine_by_species(inputs$human)
 
 
 
 ### Get gene lengths
 # all counts files from same species need to use same set of genes
 
-gene_lengths_mouse <- import_gene_lengths(mouse_projs[1])
-gene_lengths_human <- import_gene_lengths(human_projs[1])
+gene_lengths_mouse <- import_gene_lengths(inputs$mouse[1])
+gene_lengths_human <- import_gene_lengths(inputs$human[1])
+
 
 
 
@@ -160,15 +135,27 @@ mouse_TPM <- tpm(DGEList(mouse, genes = data.frame(length = gene_lengths_mouse))
 human_TPM <- tpm(DGEList(human, genes = data.frame(length = gene_lengths_human)))
 
 ### Calculate RPKM
-
 mouse_RPKM <- as.data.frame(rpkm(DGEList(mouse, genes = data.frame(length = gene_lengths_mouse))))
 human_RPKM <- as.data.frame(rpkm(DGEList(human, genes = data.frame(length = gene_lengths_human))))
+
+
+### import meta data
+samples <- read.csv(inputs$samples)
+sample_id <- read.csv(inputs$sample_id)
+FGCZ <- read.csv(inputs$FGCZ)
+meta <- merge(samples, sample_id, by = 'group_id')
+meta <- merge(meta, FGCZ, by = 'source')
+
+# outliers
+outliers <- scan(inputs$outliers, what = character(), quiet = TRUE)
 
 
 
 
 ### translate gene names using Biomart
+print('Getting mouse gene names from biomaRt')
 mouse_dict <- translate(rownames(mouse), mart = useEnsembl("ensembl", dataset = 'mmusculus_gene_ensembl'))
+print('Getting human gene names from biomaRt')
 human_dict <- translate(rownames(human), mart = useEnsembl("ensembl", dataset = 'hsapiens_gene_ensembl'))
 
 
@@ -176,6 +163,9 @@ human_dict <- translate(rownames(human), mart = useEnsembl("ensembl", dataset = 
 # export
 ################################################################
 
-timestamp <- format(Sys.time(), "%b %d %Y")
+outfile <- paste0('db_', format(Sys.time(), "%d%b%y"), '.Rdata')
 
-save(mouse_TPM, human_TPM, mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers, timestamp, file = save_output)
+print(paste('Saving database', outfile, 'in', inputs$save_db_to))
+
+save(mouse_TPM, human_TPM, mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers,
+     file = paste0(inputs$save_db_to, outfile))
