@@ -177,13 +177,16 @@ shinyServer(function(input, output, session) {
     out$Bfabrik <- NULL
     out
   },
-  escape = FALSE)
+  escape = FALSE,
+  options = list(bfilter = 'top',
+                 pageLength = 25,
+                 lengthMenu = c(25, 50, 100, 200)))
   
   
   ###############################
   
   output$debug <- renderPrint({
-
+    
   })
   
 })

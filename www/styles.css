@@ -19,3 +19,7 @@
 .selectize-dropdown-content{
   font-size: 70%;
 }
+
+tfoot {
+  display: table-header-group;
+}
