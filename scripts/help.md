@@ -1,3 +1,0 @@
-# RNA-seq database
-
-abc

@@ -81,8 +81,8 @@ shinyUI(
              )
     ),
     
-    tabPanel("Help",
-             includeMarkdown("scripts/help.md")
+    tabPanel("About",
+             div(includeMarkdown("scripts/about.md"), class='markdw')
     )
   )
 )
