@@ -21,7 +21,7 @@ initial_sel_genes <- "UCP1\nAXL"
 db <- list.files('data/', pattern = '^db_........Rdata')
 timestamp <- format(as.Date(substr(db, 4, 10), "%d%b%y"), '%d %B %Y')
 
-#in case of multiple date file, use the most recent
+#in case of multiple data files, use the most recent
 w <- which(timestamp == max(timestamp))
 db <- db[w]
 timestamp <- timestamp[w]

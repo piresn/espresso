@@ -1,6 +1,6 @@
 # run from the command line:
 #
-#   Rscript prepareCounts.R input_files.yaml
+#   Rscript createDatabase.R input_files.yaml
 #
 #
 
@@ -12,7 +12,7 @@ library(yaml)
 # yaml file with input file locations
 args <- commandArgs(TRUE)
 inputs <- read_yaml(args[1])
-#inputs <- read_yaml('~/polybox/DatasetViz/mapping/metadata/input_files.yaml')
+#inputs <- read_yaml('~/polybox/DatasetViz/mapping/input_files.yaml')
 
 
 ################################################################
@@ -119,6 +119,7 @@ translate <- function(x, mart){
 mouse <- combine_by_species(inputs$mouse)
 human <- combine_by_species(inputs$human)
 
+total_mapped <- c(colSums(mouse), colSums(human))
 
 
 ### Get gene lengths
@@ -145,6 +146,15 @@ sample_id <- read.csv(inputs$sample_id)
 FGCZ <- read.csv(inputs$FGCZ)
 meta <- merge(samples, sample_id, by = 'group_id')
 meta <- merge(meta, FGCZ, by = 'source')
+
+
+# Keep only samples that were actually imported
+meta <- meta[meta$sample %in% names(total_mapped),]
+
+# write total number mapped reads per sample
+meta$total_mapped <- total_mapped[as.character(meta$sample)]
+
+
 
 # outliers
 outliers <- scan(inputs$outliers, what = character(), quiet = TRUE)

@@ -171,6 +171,9 @@ shinyServer(function(input, output, session) {
   
   output$sampleTable <- renderDataTable({
     out <- meta[,-c(1:2)]
+    out['assigned reads'] <- out$total_mapped
+    out$total_mapped <- NULL
+    
     out$FGCZ <- paste0('<a target = "_blank" href=',
                        paste0('https://fgcz-sushi.uzh.ch', substring(out$Bfabrik, 18)),
                        '>', sapply(strsplit(as.character(out$Bfabrik), '/'), tail, n = 1),'</a>')
