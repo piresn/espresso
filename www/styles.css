@@ -20,6 +20,24 @@
   font-size: 70%;
 }
 
+.tab-content{
+  margin: 10px;
+}
+
+#go{
+  width: 60%;
+  display: block;
+  margin: 0 auto;
+}
+
+#showmeans + span{
+  font-weight: 800;
+}
+
 tfoot {
   display: table-header-group;
+}
+
+.navbar{
+  background-color: #d9831f4a;
 }

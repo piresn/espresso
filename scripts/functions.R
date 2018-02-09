@@ -178,5 +178,6 @@ express_plot <- function(x, gmeans, showmeans, metric){
           strip.text.y = element_text(angle = 180),
           strip.background = element_blank(),
           legend.title = element_blank(),
-          legend.position = 'top')
+          legend.position = 'top',
+          plot.margin = unit(c(1, 1, 1, 1), "cm"))
 }

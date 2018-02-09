@@ -12,9 +12,9 @@ shinyUI(
         
         fluidRow(
           # shinythemes::themeSelector(),
-          verbatimTextOutput('debug'),
+          #verbatimTextOutput('debug'),
           
-          column(2,
+          column(3,
                  fluidRow(
                    
                    wellPanel(
@@ -32,15 +32,14 @@ shinyUI(
                                   inline = TRUE)
                    ),
                    
+                   actionButton('go', 'GO'),
+                   
+                   div(checkboxInput("showmeans", 'Calculate means', value = FALSE),
+                       style = 'padding-top: 10px; padding-bottom: 10px'),
+                   
                    
                    radioButtons('metric', 'Metric', c('TPM (recommended)', 'RPKM'),
                                 inline = FALSE),
-
-                   actionButton('go', 'GO', width = '100%'),
-
-                   div(checkboxInput("showmeans", 'Calculate means', value = FALSE),
-                       style = 'padding-top: 10px; padding-bottom: 10px'),
-
                    
                    actionLink('showfilter', 'Filter samples',
                               icon = icon('wrench')),
@@ -55,12 +54,12 @@ shinyUI(
                  )
           ),
           
-          column(10,
-
+          column(9,
+                 
                  tabsetPanel(id = 'tabs1',
                              tabPanel('Plot',
-                                      fluidRow(
-                                        withSpinner(plotOutput('plot'), type = 1)
+                                      fluidRow(align="center",
+                                               withSpinner(plotOutput('plot'), type = 1)
                                       )
                              ),
                              
