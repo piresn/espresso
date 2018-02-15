@@ -39,6 +39,12 @@
   font-weight: 800;
 }
 
+#reset_outliers{
+  color: lightgrey;
+  float: right;
+  margin-top: -15px;
+}
+
 tfoot {
   display: table-header-group;
 }

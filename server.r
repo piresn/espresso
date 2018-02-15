@@ -30,7 +30,7 @@ shinyServer(function(input, output, session) {
                 
                 div(selectizeInput('outliers_list', 'Remove outlier samples:',
                                    choices = meta$sample, selected = outliers, multiple = TRUE),
-                    #actionLink('reset_outliers', 'Reset'),
+                    actionLink('reset_outliers', 'Preset'),
                     style = 'color: grey; font-size: 90%')
       )
     )
@@ -41,9 +41,9 @@ shinyServer(function(input, output, session) {
   })
   
   
-  # observeEvent(input$reset_outliers, {
-  #   updateSelectizeInput(session, 'outliers_list', selected = outliers)
-  # })
+  observeEvent(input$reset_outliers, {
+    updateSelectizeInput(session, 'outliers_list', selected = outliers)
+  })
   
   
   #############################################
