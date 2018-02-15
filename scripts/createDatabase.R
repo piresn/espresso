@@ -141,11 +141,8 @@ human_RPKM <- as.data.frame(rpkm(DGEList(human, genes = data.frame(length = gene
 
 
 ### import meta data
-samples <- read.csv(inputs$samples)
-sample_id <- read.csv(inputs$sample_id)
-FGCZ <- read.csv(inputs$FGCZ)
-meta <- merge(samples, sample_id, by = 'group_id')
-meta <- merge(meta, FGCZ, by = 'source')
+meta <- read.csv(inputs$meta)
+
 
 
 # Keep only samples that were actually imported

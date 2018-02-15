@@ -128,8 +128,10 @@ shinyServer(function(input, output, session) {
   #########################################
   
   output$plot <- renderPlot({
+    
     values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans, metric = values$metric)
     values$plot
+    
   },
   width = exprToFunction(calc_width()),
   height = exprToFunction(calc_height())
@@ -150,11 +152,17 @@ shinyServer(function(input, output, session) {
   #########################################
   
   output$rawdata <- DT::renderDataTable({
-    values$table
+    
+    out <- values$table
+    #colnames(out)[colnames(out) == 'Group'] <- 'Name'
+    cbind(out,
+          Info = as.character(meta[match(out$Sample, meta$sample), 'sample_info']))
+    
+    
   },
   rownames = FALSE,
   options = list(
-    autoWidth = TRUE,
+    autoWidth = FALSE,
     pageLength = 25,
     columnDefs = list(list(width = '20px', targets = "_all"))))  
   
@@ -170,18 +178,17 @@ shinyServer(function(input, output, session) {
   #########################################
   
   output$sampleTable <- renderDataTable({
-    out <- meta[,-c(1:2)]
-    out['assigned reads'] <- out$total_mapped
-    out$total_mapped <- NULL
-    
-    out$FGCZ <- paste0('<a target = "_blank" href=',
-                       paste0('https://fgcz-sushi.uzh.ch', substring(out$Bfabrik, 18)),
-                       '>', sapply(strsplit(as.character(out$Bfabrik), '/'), tail, n = 1),'</a>')
-    out$Bfabrik <- NULL
+    out <- meta
+    colnames(out)[colnames(out) == 'group'] <- 'name'
+    colnames(out)[colnames(out) == 'total_mapped'] <- 'assigned reads'
+    out['source'] <- paste0('<a target = "_blank" href=',
+                            out$data_source, '>', out$source, '</a>')
+    out$data_source <- NULL
     out
   },
   escape = FALSE,
   options = list(bfilter = 'top',
+                 autoWidth = FALSE,
                  pageLength = 25,
                  lengthMenu = c(25, 50, 100, 200)))
   
