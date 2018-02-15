@@ -1,3 +1,4 @@
+a <- Sys.time()
 library(shiny)
 library(shinythemes)
 library(shinyjs)
@@ -13,7 +14,6 @@ source('scripts/functions.R')
 
 initial_sel_genes <- "UCP1\nAXL"
 
-
 #################################
 # import data
 #################################
@@ -28,6 +28,19 @@ timestamp <- timestamp[w]
 
 
 load(paste0('data/', db))
+
+loadtime1 <- Sys.time()-a
+
+#################################
+# Convert from RPKM to TPM
+#################################
+
+# this adds >1 second to loading time. Alternatively can place this in database
+
+f <- function(x) x*1e6 / sum(x)
+mouse_TPM <- as.data.frame(apply(mouse_RPKM, 2, f))
+human_TPM <- as.data.frame(apply(human_RPKM, 2, f))
+loadtime2 <- Sys.time()-a
 
 
 #################################

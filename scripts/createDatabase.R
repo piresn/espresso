@@ -67,24 +67,6 @@ combine_by_species <- function(projs){
   return(x)
 }
 
-################################################################
-# Function to calculate TPMs
-################################################################
-
-tpm <- function(x){
-  
-  if(!'genes' %in% names(x)) stop('gene annotation information not available in DGEList')
-  if(!'length' %in% names(x$genes)) stop('gene length info not present in DGEList annotation table')
-  
-  countToTpm <- function(counts, effLen) {
-    # from https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/
-    rate <- log(counts) - log(effLen)
-    denom <- log(sum(exp(rate)))
-    exp(rate - denom + log(1e6))
-  }
-  out <- apply(x$counts, 2, countToTpm, effLen = x$genes$length)
-  return(as.data.frame(out))
-}
 
 ################################################################
 # function to get gene names from BiomaRt
@@ -129,15 +111,10 @@ gene_lengths_mouse <- import_gene_lengths(inputs$mouse[1])
 gene_lengths_human <- import_gene_lengths(inputs$human[1])
 
 
-
-
-### Calculate TPMs
-mouse_TPM <- tpm(DGEList(mouse, genes = data.frame(length = gene_lengths_mouse)))
-human_TPM <- tpm(DGEList(human, genes = data.frame(length = gene_lengths_human)))
-
 ### Calculate RPKM
 mouse_RPKM <- as.data.frame(rpkm(DGEList(mouse, genes = data.frame(length = gene_lengths_mouse))))
 human_RPKM <- as.data.frame(rpkm(DGEList(human, genes = data.frame(length = gene_lengths_human))))
+
 
 
 ### import meta data
@@ -148,14 +125,13 @@ meta <- read.csv(inputs$meta)
 # Keep only samples that were actually imported
 meta <- meta[meta$sample %in% names(total_mapped),]
 
-# write total number mapped reads per sample
+# Write total number mapped reads per sample
 meta$total_mapped <- total_mapped[as.character(meta$sample)]
 
 
 
 # outliers
 outliers <- scan(inputs$outliers, what = character(), quiet = TRUE)
-
 
 
 
@@ -174,5 +150,5 @@ outfile <- paste0('db_', format(Sys.time(), "%d%b%y"), '.Rdata')
 
 print(paste('Saving database', outfile, 'in', inputs$save_db_to))
 
-save(mouse_TPM, human_TPM, mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers,
+save(mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers,
      file = paste0(inputs$save_db_to, outfile))
