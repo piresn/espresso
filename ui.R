@@ -42,7 +42,7 @@ shinyUI(
                                 inline = FALSE),
                    
                    actionLink('showfilter', 'Filter samples',
-                              icon = icon('wrench')),
+                              icon = icon('tasks')),
                    
                    uiOutput('filter'),
                    

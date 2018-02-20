@@ -52,3 +52,17 @@ tfoot {
 .navbar{
   background-color: #d9831f4a;
 }
+
+.md_foot{
+  margin-top: 200px;
+  color: lightgray;
+  float: right;
+  width: 85%;
+}
+
+.md_foot:hover{
+  color: darkgray;
+  text-decoration: none;
+}
+
+
