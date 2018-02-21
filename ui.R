@@ -12,7 +12,7 @@ shinyUI(
         
         fluidRow(
           # shinythemes::themeSelector(),
-          verbatimTextOutput('debug'),
+          #verbatimTextOutput('debug'),
           
           column(3,
                  fluidRow(

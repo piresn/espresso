@@ -60,11 +60,18 @@ long_format <- function(x){
 ###########################################################
 ###########################################################
 
+calc_TPM <- function(x, sum_rpkm){
+  1e6 * sweep(x, 2, sum_rpkm, '/')
+}
+
+###########################################################
+###########################################################
+
 create_df <- function(species, metric, genes, dict, experiment, outliers_list){
   
   x <- get(paste(species, 'RPKM', sep = '_'))[genes, ]
   
-  if(metric == 'TPM') x <- 1e6 * sweep(x, 2, get(paste0(species, '_sumRPKM')), '/')
+  if(metric == 'TPM') x <- calc_TPM(x, get(paste0(species, '_sumRPKM')))
   
   x$gene <- translate_ensembl(rownames(x), dict)
   x <- long_format(x)

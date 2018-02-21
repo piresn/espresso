@@ -196,7 +196,6 @@ shinyServer(function(input, output, session) {
   ###############################
   
   output$debug <- renderPrint({
-    c(loadtime1, loadtime2)
   })
   
 })
