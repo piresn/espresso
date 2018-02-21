@@ -3,9 +3,8 @@ shinyServer(function(input, output, session) {
   values <- reactiveValues(plot = NULL,
                            dict = NULL,
                            table = NULL,
-                           species = 'mouse',
-                           # experiment has to be initial input$species
-                           experiment = list_projects_sp('mouse'),
+                           species = spp[1],
+                           experiment = list_projects_sp(spp[1]),
                            metric = 'TPM',
                            genes = NULL,
                            df = NULL,
@@ -65,9 +64,7 @@ shinyServer(function(input, output, session) {
     
     values$plot <- NULL
     
-    values$dict <- switch(input$species,
-                          'human' = human_dict,
-                          'mouse' = mouse_dict)
+    values$dict <- get(paste0(input$species, '_dict'))
     
     values$metric <- switch(input$metric,
                             'TPM (recommended)' = 'TPM',

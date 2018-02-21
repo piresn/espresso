@@ -28,7 +28,7 @@ shinyUI(
                                   inline = TRUE),
                      
                      
-                     radioButtons('species', 'Species', c('mouse', 'human'),
+                     radioButtons('species', 'Species', spp,
                                   inline = TRUE)
                    ),
                    

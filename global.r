@@ -13,6 +13,8 @@ source('scripts/functions.R')
 
 initial_sel_genes <- "UCP1\nAXL"
 
+spp <- c('mouse', 'human')
+
 #################################
 # import data
 #################################
