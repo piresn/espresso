@@ -1,4 +1,3 @@
-a <- Sys.time()
 library(shiny)
 library(shinythemes)
 library(shinyjs)
@@ -29,18 +28,6 @@ timestamp <- timestamp[w]
 
 load(paste0('data/', db))
 
-loadtime1 <- Sys.time()-a
-
-#################################
-# Convert from RPKM to TPM
-#################################
-
-# this adds >1 second to loading time. Alternatively can store TPMs in database or calculate only for the selected genes.
-
-f <- function(x) x*1e6 / sum(x)
-mouse_TPM <- as.data.frame(apply(mouse_RPKM, 2, f))
-human_TPM <- as.data.frame(apply(human_RPKM, 2, f))
-loadtime2 <- Sys.time()-a
 
 
 #################################

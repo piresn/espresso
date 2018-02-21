@@ -116,6 +116,10 @@ mouse_RPKM <- as.data.frame(rpkm(DGEList(mouse, genes = data.frame(length = gene
 human_RPKM <- as.data.frame(rpkm(DGEList(human, genes = data.frame(length = gene_lengths_human))))
 
 
+### Total sum RPKMs
+mouse_sumRPKM <- colSums(mouse_RPKM)
+human_sumRPKM <- colSums(human_RPKM)
+
 
 ### import meta data
 meta <- read.csv(inputs$meta)
@@ -150,5 +154,5 @@ outfile <- paste0('db_', format(Sys.time(), "%d%b%y"), '.Rdata')
 
 print(paste('Saving database', outfile, 'in', inputs$save_db_to))
 
-save(mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers,
+save(mouse_RPKM, human_RPKM, mouse_sumRPKM, human_sumRPKM, meta, mouse_dict, human_dict, outliers,
      file = paste0(inputs$save_db_to, outfile))
