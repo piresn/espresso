@@ -6,6 +6,7 @@ shinyServer(function(input, output, session) {
                            species = spp[1],
                            experiment = list_projects_sp(spp[1]),
                            metric = 'TPM',
+                           showmeans = FALSE,
                            genes = NULL,
                            df = NULL,
                            gmeans = NULL)
@@ -62,6 +63,8 @@ shinyServer(function(input, output, session) {
     
     values$species <- input$species
     
+    values$showmeans <- input$showmeans
+    
     values$plot <- NULL
     
     values$dict <- get(paste0(input$species, '_dict'))
@@ -87,9 +90,10 @@ shinyServer(function(input, output, session) {
     # geometric means
     values$gmeans <- calc_gmeans(values$df)
     
+    
     #########################
     
-    if(input$showmeans){
+    if(values$showmeans){
       
       values$table <- data.frame(Sample = values$gmeans$group,
                                  Gene = values$gmeans$gene,
@@ -126,7 +130,7 @@ shinyServer(function(input, output, session) {
   
   output$plot <- renderPlot({
     
-    values$plot <- express_plot(values$df, values$gmeans, showmeans = input$showmeans, metric = values$metric)
+    values$plot <- express_plot(values$df, values$gmeans, showmeans = values$showmeans, metric = values$metric)
     values$plot
     
   },
@@ -136,12 +140,12 @@ shinyServer(function(input, output, session) {
   
   
   calc_width <- reactive({
-    if(input$showmeans) return(600)
+    if(values$showmeans) return(600)
     else return(800)
   })
   
   calc_height <- reactive({
-    if(input$showmeans) return(18 * length(unique(values$plot$data$group)) + 150)
+    if(values$showmeans) return(18 * length(unique(values$plot$data$group)) + 150)
     else return(18 * length(unique(values$plot$data$sample)) + 100)
   })
   
