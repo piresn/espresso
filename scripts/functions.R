@@ -171,7 +171,10 @@ express_plot <- function(x, gmeans, showmeans, metric){
                    size = 2, alpha = 0.3, show.legend = FALSE) +
       geom_point(shape = 21, size = rel(5)) +
       geom_hline(yintercept = 0) +
-      scale_x_discrete(position = 'top')
+      scale_x_discrete(position = 'top') +
+      theme(axis.text.y = element_text(colour = 'gray80', size = 8))
+      
+      
   }
   
   g + scale_y_log10(breaks = breaks, expand = c(0.05, 0),
@@ -182,7 +185,6 @@ express_plot <- function(x, gmeans, showmeans, metric){
     scale_fill_brewer(palette = 'Dark2') +
     scale_color_brewer(palette = 'Dark2') +
     coord_flip() +
-    theme_classic(16) +
     theme(axis.line.y = element_blank(),
           axis.ticks.y = element_blank(),
           panel.grid.major.x = element_line(color = 'grey95'),

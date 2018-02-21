@@ -10,6 +10,9 @@ library(shinycssloaders)
 
 source('scripts/functions.R')
 
+#ggplot theme set
+theme_set(theme_classic(16))
+
 # set suggestions for genes in search box
 initial_sel_genes <- "UCP1\nAXL"
 
