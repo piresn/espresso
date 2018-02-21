@@ -178,7 +178,7 @@ express_plot <- function(x, gmeans, showmeans, metric){
           axis.ticks.y = element_blank(),
           panel.grid.major.x = element_line(color = 'grey95'),
           axis.title.y = element_blank(),
-          strip.text.y = element_text(angle = 180),
+          strip.text.y = element_text(angle = 180, hjust = 1),
           strip.background = element_blank(),
           legend.title = element_blank(),
           legend.position = 'top',
