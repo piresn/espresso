@@ -16,10 +16,16 @@ TPM/RPKM values can provide an initial idea of interesting changes in gene expre
 
 ### Means
 
+If the 'Show means only' option is selected, the geometric mean of replicate samples will be shown instead of the individual sample values.
+
 ### Filter
+
+The list of projects and corresponding samples can be found in the 'Samples info' tab (top of the page).
+
 
 #### Outliers
 
+Individual samples can be excluded from the analysis. A small set of outliers is initially suggested, and can be called back by clicking the link 'Reset'.
 
 ### Plot
 
@@ -37,8 +43,6 @@ All the samples were processed using a similar pipeline. Briefly:
 - Uniquely mapped reads overlapping exons were aggregated using featureCounts from the Subread package v1.5.3, using Ensembl 90 annotations
 
 
-
-##
 
 
 

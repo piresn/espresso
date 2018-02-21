@@ -1,6 +1,6 @@
 shinyUI(
   navbarPage(
-    "v0.9", theme = shinytheme("simplex"),
+    "v0.9", theme = shinytheme("yeti"),
     
     tabPanel(
       "Gene expression",
@@ -34,7 +34,7 @@ shinyUI(
                    
                    actionButton('go', 'GO'),
                    
-                   div(checkboxInput("showmeans", 'Calculate means', value = FALSE),
+                   div(checkboxInput("showmeans", 'Show means only', value = FALSE),
                        style = 'padding-top: 10px; padding-bottom: 10px'),
                    
                    

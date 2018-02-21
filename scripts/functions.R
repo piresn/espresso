@@ -98,9 +98,13 @@ infoTable <- function(genes = NULL, dict = NULL, species = NULL){
                     'mouse' = 'Mus_musculus',
                     'human' = 'Homo_sapiens')
       
-      out$NCBI <- paste0('<a target = "_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=',
+      out$links <- paste0('<a style = "content: url(ncbi.ico)" target = "_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=',
                          out$Ensembl,'">',
-                         'NCBI', '</a>')
+                         'NCBI', '</a>',
+                         ' ',
+                         '<a style = "content: url(ebi.ico)" target = "_blank" href="https://www.ebi.ac.uk/gxa/genes/',
+                         out$Ensembl,'">',
+                         'EBI', '</a>')
       
       out$Ensembl <- paste0('<a target = "_blank" href="https://www.ensembl.org/', spp, '/Gene/Summary?g=',
                             out$Ensembl,'">',

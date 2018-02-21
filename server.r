@@ -29,7 +29,7 @@ shinyServer(function(input, output, session) {
                 
                 div(selectizeInput('outliers_list', 'Remove outlier samples:',
                                    choices = meta$sample, selected = outliers, multiple = TRUE),
-                    actionLink('reset_outliers', 'Preset'),
+                    actionLink('reset_outliers', 'Reset'),
                     style = 'color: grey; font-size: 90%')
       )
     )

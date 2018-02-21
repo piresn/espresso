@@ -10,9 +10,10 @@ library(shinycssloaders)
 
 source('scripts/functions.R')
 
-
+# set suggestions for genes in search box
 initial_sel_genes <- "UCP1\nAXL"
 
+# set species to be used in search menus
 spp <- c('mouse', 'human')
 
 #################################

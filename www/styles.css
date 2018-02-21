@@ -49,10 +49,6 @@ tfoot {
   display: table-header-group;
 }
 
-.navbar{
-  background-color: #d9831f4a;
-}
-
 .md_foot{
   margin-top: 200px;
   color: lightgray;
@@ -64,5 +60,3 @@ tfoot {
   color: darkgray;
   text-decoration: none;
 }
-
-
