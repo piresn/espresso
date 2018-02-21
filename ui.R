@@ -38,7 +38,7 @@ shinyUI(
                        style = 'padding-top: 10px; padding-bottom: 10px'),
                    
                    
-                   radioButtons('metric', 'Metric', c('TPM (recommended)', 'RPKM'),
+                   radioButtons('metric', 'Expression units', c('TPM (recommended)', 'RPKM'),
                                 inline = FALSE),
                    
                    actionLink('showfilter', 'Filter samples',
@@ -59,7 +59,7 @@ shinyUI(
                  tabsetPanel(id = 'tabs1',
                              tabPanel('Plot',
                                       fluidRow(align="center",
-                                               withSpinner(plotOutput('plot'), type = 1)
+                                               withSpinner(plotOutput('plot'), type = 8, color = '#D9D9D9')
                                       )
                              ),
                              

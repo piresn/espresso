@@ -6,11 +6,13 @@ This webtool allows comparing the expression of mouse and human genes in RNA-seq
 
 Up to 8 genes can be compared at the same time: use either the official gene name (e.g. Ucp1) or the Ensembl gene IDs (e.g. ENSMUSG00000031710). Only genes from the same species can be compared at the same time.
 
-### Metric
+### Expression units
 
-Individual gene expression can be represented as [TPMs or RPKMs](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/). TPM/RPKMs are relatively simple metric units that are not normalised between samples.
+Individual gene expression can be represented as TPMs (transcripts per million) or RPKMs (Reads per kilobase of exon per million reads). TPM is a modification of RPKMs that is [more consistent between samples](https://www.ncbi.nlm.nih.gov/pubmed/22872506).
 
-**This means that TPMs/RPKMs are not the ideal metric to compare gene expression between samples.**
+TPM/RPKMs are relatively simple expression units that account for intra-specific normalization, but [not for inter-sample normalization](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/).
+
+**This means that TPMs/RPKMs are not an metric to compare gene expression between samples.**
 
 TPM/RPKM values can provide an initial idea of interesting changes in gene expression, but any assessment of differential gene expression should be tested on a case-by-case basis using more suitable statistical techniques.
 

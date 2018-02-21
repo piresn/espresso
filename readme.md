@@ -1,6 +1,6 @@
 # Espresso - RNA-seq gene expression visualization
 
-Espresso is a Shiny app provides an interface to visualize and compare gene expression across multiple RNA-seq datasets.
+Espresso is a Shiny app that provides an interface to visualize and compare gene expression across multiple RNA-seq datasets.
 
 ### Required libraries:
 

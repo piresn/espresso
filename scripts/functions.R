@@ -152,9 +152,7 @@ express_plot <- function(x, gmeans, showmeans, metric){
   x$group <- factor(x$group, levels = levels(gmeans$group))
   
   # X axis title
-  axis_title <- switch(metric,
-                       'TPM' = 'TPM (transcripts per million)',
-                       'RPKM' = 'RPKM (Reads Per Kilobase Million)')
+  axis_title <- metric
   
   if(showmeans){
     
