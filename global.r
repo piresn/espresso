@@ -30,3 +30,10 @@ timestamp <- timestamp[w]
 
 
 load(paste0('data/', db))
+
+#################################
+# RPKM sums for TPM calculations
+#################################
+
+mouse_sumRPKM <- colSums(mouse_RPKM)
+human_sumRPKM <- colSums(human_RPKM)
