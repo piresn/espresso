@@ -163,7 +163,7 @@ express_plot <- function(x, gmeans, showmeans, metric){
       geom_point(shape = 21, size = rel(5)) +
       geom_hline(yintercept = 0) +
       scale_x_discrete(position = 'top') +
-      theme(axis.text.y = element_text(colour = 'gray80', size = 8))
+      theme(axis.text.y = element_text(colour = 'gray80', size = 10))
       
       
   }
