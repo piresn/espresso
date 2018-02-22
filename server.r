@@ -155,11 +155,12 @@ shinyServer(function(input, output, session) {
   output$rawdata <- DT::renderDataTable({
     
     out <- values$table
-    #colnames(out)[colnames(out) == 'Group'] <- 'Name'
-    cbind(out,
-          Info = as.character(meta[match(out$Sample, meta$sample), 'sample_info']))
     
-    
+    if(!values$showmeans) {
+      out <- cbind(out,
+                   Info = as.character(meta[match(out$Sample, meta$sample), 'sample_info']))
+    }
+    out
   },
   rownames = FALSE,
   options = list(

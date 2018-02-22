@@ -4,7 +4,7 @@ Espresso is a Shiny app that provides an interface to visualize and compare gene
 
 ### Required libraries:
 
-Espresso runs successfully with the following R packages on R 3.4.3:
+Espresso runs successfully with the following packages on R 3.4.3:
 
 ```
 shiny 1.0.5
