@@ -93,22 +93,13 @@ infoTable <- function(genes = NULL, dict = NULL, species = NULL){
     out <- dict[dict$Ensembl %in% genes, c('name', 'Ensembl')]
     
     if(nrow(out) > 0){
-      
-      spp <- switch(species,
-                    'mouse' = 'Mus_musculus',
-                    'human' = 'Homo_sapiens')
-      
-      out$links <- paste0('<a style = "content: url(ncbi.ico)" target = "_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=',
-                         out$Ensembl,'">',
-                         'NCBI', '</a>',
+
+      out$more <- paste0('<a target = "_blank" href="https://www.ncbi.nlm.nih.gov/gene/?term=',
+                         out$Ensembl,'"><img src="ncbi.ico" title="NCBI Gene"/></a>',
                          ' ',
-                         '<a style = "content: url(ebi.ico)" target = "_blank" href="https://www.ebi.ac.uk/gxa/genes/',
-                         out$Ensembl,'">',
-                         'EBI', '</a>')
-      
-      out$Ensembl <- paste0('<a target = "_blank" href="https://www.ensembl.org/', spp, '/Gene/Summary?g=',
-                            out$Ensembl,'">',
-                            out$Ensembl, '</a>')
+                         '<a target = "_blank" href="https://www.ebi.ac.uk/gxa/genes/',
+                         out$Ensembl,'"><img src="ebi.ico" title="EBI Expression Atlas"/></a>')
+
     }
     return(out)
   }
