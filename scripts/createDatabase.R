@@ -12,22 +12,24 @@ library(yaml)
 # yaml file with input file locations
 args <- commandArgs(TRUE)
 inputs <- read_yaml(args[1])
-#inputs <- read_yaml('~/polybox/DatasetViz/mapping/input_files.yaml')
 
 
 ################################################################
 # function to import counts from FeatureCounts output
 ################################################################
 
-import <- function(countsFile){
+import <- function(countsFile, skipRows = 1, remove_str = c("results.sorted.", ".BAM")){
   
   ## imports counts from feature counts output file
+  # the remove_str is an optional vector of strings to be removed from sample names
   
   counts <- read.table(countsFile,
-                       skip = 1, header = TRUE, row.names = 1, sep = '\t')
+                       skip = skipRows, header = TRUE, row.names = 1, sep = '\t')
   counts <- subset(counts, select = -c(Chr, Start, End, Strand, Length))
-  names(counts) <- gsub('results.sorted.', '', names(counts))
-  names(counts) <- gsub('.BAM', '', names(counts))
+  
+  for(s in remove_str){
+    names(counts) <- gsub(s, '', names(counts))
+  }
   
   return(counts)
 }
@@ -48,7 +50,7 @@ import_gene_lengths <- function(countsFile){
 
 
 ################################################################
-# function to import / combine files
+# function to import and merge count files
 ################################################################
 
 combine_by_species <- function(projs){
@@ -97,49 +99,46 @@ translate <- function(x, mart){
 ################################################################
 ################################################################
 
+
 ### import read counts
-mouse <- combine_by_species(inputs$mouse)
-human <- combine_by_species(inputs$human)
 
-total_mapped <- c(colSums(mouse), colSums(human))
+total_mapped <- c()
 
-
-### Get gene lengths
-# all counts files from same species need to use same set of genes
-
-gene_lengths_mouse <- import_gene_lengths(inputs$mouse[1])
-gene_lengths_human <- import_gene_lengths(inputs$human[1])
-
-
-### Calculate RPKM
-mouse_RPKM <- as.data.frame(rpkm(DGEList(mouse, genes = data.frame(length = gene_lengths_mouse))))
-human_RPKM <- as.data.frame(rpkm(DGEList(human, genes = data.frame(length = gene_lengths_human))))
-
-
-### Total sum RPKMs
-mouse_sumRPKM <- colSums(mouse_RPKM)
-human_sumRPKM <- colSums(human_RPKM)
+for(i in c('mouse', 'human')){
+  
+  # get counts
+  assign(i, combine_by_species(inputs[[i]]))
+  
+  # get gene lengths
+  tmp <- NULL
+  tmp <- import_gene_lengths(inputs[[i]][1])
+  
+  # calculate RPKMs
+  assign(paste0(i, '_RPKM'),
+         as.data.frame(rpkm(DGEList(get(i), genes = data.frame(length = tmp)))))
+  
+  total_mapped <- c(total_mapped, colSums(get(i)))
+}
 
 
 ### import meta data
 meta <- read.csv(inputs$meta)
 
-
-
-# Keep only samples that were actually imported
+# Keep only samples in metadata that were actually imported
 meta <- meta[meta$sample %in% names(total_mapped),]
 
-# Write total number mapped reads per sample
+# Add total number mapped reads per sample
 meta$total_mapped <- total_mapped[as.character(meta$sample)]
 
 
 
-# outliers
+### outliers
 outliers <- scan(inputs$outliers, what = character(), quiet = TRUE)
 
 
 
 ### translate gene names using Biomart
+
 print('Getting mouse gene names from biomaRt')
 mouse_dict <- translate(rownames(mouse), mart = useEnsembl("ensembl", dataset = 'mmusculus_gene_ensembl'))
 print('Getting human gene names from biomaRt')
@@ -154,5 +153,5 @@ outfile <- paste0('db_', format(Sys.time(), "%d%b%y"), '.Rdata')
 
 print(paste('Saving database', outfile, 'in', inputs$save_db_to))
 
-save(mouse_RPKM, human_RPKM, mouse_sumRPKM, human_sumRPKM, meta, mouse_dict, human_dict, outliers,
+save(mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers,
      file = paste0(inputs$save_db_to, outfile))
