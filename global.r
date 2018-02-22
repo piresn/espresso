@@ -30,11 +30,3 @@ timestamp <- timestamp[w]
 
 
 load(paste0('data/', db))
-
-
-
-#################################
-# development
-#################################
-
-source('scripts/test.R')

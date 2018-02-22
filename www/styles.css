@@ -30,7 +30,8 @@
 }
 
 #go{
-  width: 60%;
+  width: 50%;
+  border-radius: 6px;
   display: block;
   margin: 0 auto;
 }
@@ -50,10 +51,10 @@ tfoot {
 }
 
 .md_foot{
-  margin-top: 200px;
-  color: lightgray;
+  margin-top: 100px;
+  margin-bottom: 10px;
   float: right;
-  width: 85%;
+  color: lightgray;
 }
 
 .md_foot:hover{

@@ -11,7 +11,6 @@ shinyUI(
         includeCSS("www/styles.css"),
         
         fluidRow(
-          # shinythemes::themeSelector(),
           #verbatimTextOutput('debug'),
           
           column(3,
