@@ -20,6 +20,7 @@ shinyUI(
                    wellPanel(
                      
                      helpText('Enter up to 8 genes:'),
+                    
                      textAreaInput('identif', NULL, rows = 2, resize = 'vertical',
                                    value = initial_sel_genes,
                                    width = '85%'),
@@ -28,7 +29,7 @@ shinyUI(
                                   inline = TRUE),
                      
                      
-                     radioButtons('species', 'Species', spp,
+                     radioButtons('species', 'Species', levels(meta$species),
                                   inline = TRUE)
                    ),
                    
@@ -81,7 +82,7 @@ shinyUI(
              )
     ),
     
-    tabPanel("About",
+    tabPanel("Help",
              div(includeMarkdown("help.md"), class='markdw')
     )
   )
