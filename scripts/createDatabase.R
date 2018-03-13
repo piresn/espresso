@@ -117,7 +117,7 @@ for(i in c('mouse', 'human')){
   assign(paste0(i, '_RPKM'),
          as.data.frame(rpkm(DGEList(get(i), genes = data.frame(length = tmp)))))
   
-  total_mapped <- c(total_mapped, colSums(get(i)))
+  total_mapped <- c(total_mapped, colSums(get(i), na.rm = TRUE))
 }
 
 
