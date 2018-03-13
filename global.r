@@ -20,16 +20,12 @@ initial_sel_genes <- "UCP1\nAXL"
 # import data
 #################################
 
-db <- list.files('data/', pattern = '^db_........Rdata')
-timestamp <- format(as.Date(substr(db, 4, 10), "%d%b%y"), '%d %B %Y')
+# Database is stored as a RData file
+# in case of multiple data files, use only the first
 
-#in case of multiple data files, use the most recent
-w <- which(timestamp == max(timestamp))
-db <- db[w]
-timestamp <- timestamp[w]
+db <- list.files('data/', pattern = '.Rdata$')
 
-
-load(paste0('data/', db))
+load(paste0('data/', db[1]))
 
 #################################
 # RPKM sums for TPM calculations

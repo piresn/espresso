@@ -149,9 +149,9 @@ human_dict <- translate(rownames(human), mart = useEnsembl("ensembl", dataset = 
 # export
 ################################################################
 
-outfile <- paste0('db_', format(Sys.time(), "%d%b%y"), '.Rdata')
+timestamp <- Sys.time()
 
-print(paste('Saving database', outfile, 'in', inputs$save_db_to))
+print(paste('Saving database in', inputs$save_db_to))
 
-save(mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers,
-     file = paste0(inputs$save_db_to, outfile))
+save(mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers, timestamp,
+     file = inputs$save_db_to)
