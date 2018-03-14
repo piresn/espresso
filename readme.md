@@ -6,7 +6,7 @@ Espresso is a Shiny app that provides an interface to visualize and compare gene
 
 Espresso runs successfully with the following packages on R 3.4.3:
 
-```r
+```
 shiny 1.0.5
 shinythemes 1.1.1
 shinyjs 1.0
@@ -25,11 +25,11 @@ devtools::install_github('andrewsali/shinycssloaders')
 ```
 
 In addition, database creation using the standalone createDatabase.R script requires:
-```r
-yaml_2.1.16
-biomaRt_2.34.2
-edgeR_3.20.8
-limma_3.34.9
+```
+yaml 2.1.16
+biomaRt 2.34.2
+edgeR 3.20.8
+limma 3.34.9
 ```
 biomaRt, edgeR and limma can be installed from Bioconductor.
 
@@ -115,6 +115,6 @@ _For the sake of simplicity, no inter-sample normalization step is performed in 
 
 - A third option is to start manually update the objects in an existing RData database: make inner join RPKMs, add new rows in meta table, and update timestamp.
 
-# Extending espresso to other species
+# Other species
 
-Espresso was initially designed for human and mouse samples. Nevertheless, it can potentially be easily extended to other species. All that would be required are a few changes in the createDatabase.R script (including making sure that the dictionary creation using biomaRt works correctly), so that the database file also includes _newspecies_RPKM_ and _newspecies_dict_ objects.
+Espresso can be easily extended to RNA-seq from other species in addition to human and mouse. All that would be required are a few changes in the createDatabase.R script (including making sure that biomaRt works correctly), so that the database file also includes _newspecies_RPKM_ and _newspecies_dict_ objects.

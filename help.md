@@ -16,9 +16,7 @@ If the 'Show means only' option is selected, the geometric mean of replicate sam
 
 Individual gene expression can be represented as TPMs (transcripts per million) or RPKMs (reads per kilobase of exon per million reads). TPM is more consistent between samples than RPKM, and is therefore the recommended expression unit to use.
 
-TPM/RPKMs provide intra-specific normalization based on gene length. This allows them to compare the expression of different genes in the same sample. However, [TPM/RPKMs do not provide inter-sample normalization](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and, therefore **are not an ideal metric to compare gene expression between different samples.**
-
-TPM/RPKM values can provide an initial idea of interesting changes in gene expression between samples, but any final assessment of differential gene expression should be tested on a case-by-case basis using more appropriate statistical approaches.
+TPM/RPKMs provide intra-specific normalization based on gene length. This allows them to compare the expression of different genes in the same sample. However, [TPM/RPKMs do not provide inter-sample normalization](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and, therefore **are not an ideal metric to compare gene expression between different samples.** TPM/RPKM values can provide an initial idea of interesting changes in gene expression between samples, but any final assessment of differential gene expression should be tested on a case-by-case basis using more appropriate statistical approaches.
 
 
 ### Filter
