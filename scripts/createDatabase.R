@@ -1,6 +1,6 @@
 # run from the command line:
 #
-#   Rscript createDatabase.R input_files.yaml
+#   Rscript createDatabase.R params.yaml
 #
 #
 
@@ -18,8 +18,8 @@ inputs <- read_yaml(args[1])
 # function to import counts from FeatureCounts output
 ################################################################
 
-import <- function(countsFile, skipRows = 1, remove_str = c("results.sorted.", ".BAM")){
-  
+import <- function(countsFile, skipRows = 1, remove_str = unlist(inputs$remove_string_counts_table)){
+
   ## imports counts from feature counts output file
   # the remove_str is an optional vector of strings to be removed from sample names
   
@@ -56,16 +56,18 @@ import_gene_lengths <- function(countsFile){
 combine_by_species <- function(projs){
   for(p in seq_along(projs)){
     
-    print(paste('Processing', projs[p]))
+    cat('Processing', projs[p], "\n")
     
     if(p == 1){
       x <- import(projs[p])
     } else{
       imp <- import(projs[p])
-      stopifnot(rownames(imp) == rownames(x))
+      stopifnot(rownames(imp) == rownames(x)) # rownames should be identical
       x <- cbind(x, imp)
     }
   }
+  stopifnot(!any(is.na(x))) # NAs are not allowed
+  stopifnot(!any(duplicated(names(x)))) # duplicated column names are not allowed.
   return(x)
 }
 
@@ -139,9 +141,9 @@ outliers <- scan(inputs$outliers, what = character(), quiet = TRUE)
 
 ### translate gene names using Biomart
 
-print('Getting mouse gene names from biomaRt')
+cat('Getting mouse gene names from biomaRt\n')
 mouse_dict <- translate(rownames(mouse), mart = useEnsembl("ensembl", dataset = 'mmusculus_gene_ensembl'))
-print('Getting human gene names from biomaRt')
+cat('Getting human gene names from biomaRt\n')
 human_dict <- translate(rownames(human), mart = useEnsembl("ensembl", dataset = 'hsapiens_gene_ensembl'))
 
 
@@ -151,7 +153,7 @@ human_dict <- translate(rownames(human), mart = useEnsembl("ensembl", dataset = 
 
 timestamp <- Sys.time()
 
-print(paste('Saving database in', inputs$save_db_to))
+cat('Saving database as', inputs$save_db_to, '\n')
 
 save(mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers, timestamp,
      file = inputs$save_db_to)
