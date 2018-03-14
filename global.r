@@ -23,7 +23,7 @@ initial_sel_genes <- "UCP1\nAXL"
 # Database is stored as a RData file
 # in case of multiple data files, use only the first
 
-db <- list.files('data/', pattern = '.Rdata$')
+db <- list.files('data/', pattern = '.RData$')
 
 load(paste0('data/', db[1]))
 
