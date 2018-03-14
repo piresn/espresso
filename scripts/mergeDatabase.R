@@ -30,7 +30,7 @@ for(i in paste0(c('mouse', 'human'), '_RPKM')){
   }
   
   tmp <- merge(x = x, y = y,
-               by = 0, all.x = TRUE)
+               by = 0)
   
   rownames(tmp) <- tmp$Row.names
   tmp$Row.names <- NULL
@@ -69,7 +69,7 @@ outliers <- c(env1$outliers, env2$outliers)
 
 timestamp <- Sys.time()
 
-outfile <- 'merged.Rdata'
+outfile <- 'merged.RData'
 cat(paste('Saving database as', outfile, '...'))
 
 save(mouse_RPKM, human_RPKM, meta, mouse_dict, human_dict, outliers, timestamp,
