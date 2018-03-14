@@ -28,7 +28,7 @@ shinyUI(
                                   inline = TRUE),
                      
                      
-                     radioButtons('species', 'Species', levels(meta$species),
+                     radioButtons('species', 'Species', spp,
                                   inline = TRUE)
                    ),
                    
