@@ -39,10 +39,12 @@ Information about the individual samples, including the source of the data, can 
 
 All the samples were processed using a similar pipeline. Briefly:
 
-- Reads were quality-based trimmed and known adaptors were removed.
-- Processed reads were mapped to the primary assembly of the human GRCh38 and mouse GRCm38 genomes.
+- Reads were quality-trimmed using Trimmomatic 0.35 with the parameters TruSeq3-SE.fa:2:30:10 LEADING:20 TRAILING:20 SLIDINGWINDOW:4:20 MINLEN:50.
+- Processed reads were mapped to the _Mus musculus_  GRCm38 or _Homo sapiens_ GRCh38 reference genomes (soft masked primary assembly), using STAR v2.5.3a with GRCm38.90.chr or GRCh38.90.chr GTF annotations from Ensembl
+- Uniquely mapped reads aligning to exons were aggregated using featureCounts (Subread package v1.5.3)
 - Uniquely mapped reads overlapping exons were aggregated using Ensembl 90 annotations.
 
+---
 
-
-<a class = "md_foot" target = "_blank" href='https://github.com/piresn/espresso'>Source code available on Github <i class="fa fa-github"></i></a>
+<a class = "md_foot" target = "_blank" href='https://github.com/piresn/espresso'>Nuno Pires 2018 |
+Source code available on Github <i class="fa fa-github"></i></a>

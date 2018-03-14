@@ -106,11 +106,14 @@ _For the sake of simplicity, no inter-sample normalization step is performed in 
 
 ## Database update
 
-The easiest way to update the database is to have both the original and the new files with count data locally available, update the input_files.yaml file, and re-run the `createDatabase.R` script.
+- The easiest way to update the database is to have both the original and the new files with count data locally available, update the params.yaml file, and re-run the `createDatabase.R` script.
 
-If there is no access to the original count data files from a previous database, then:
-- create a database using only the new set of samples using `createDatabase.R`
-- merge the old and new databases using the `mergeDatabase.R` script. This will create a _merged.RData_ database file. The script was not extensively tested. Make sure that there is no overlap between the names of samples (mandatory), groups and projects (unless this is actually desired) in the two input databases. An inner join is made between the count tables of the two input databases, so any missing genes from one of the input databases will not be present in the output. The dictionary from the first input database will be used.
+- If there is no access to the original count data files from a previous database, then:
+  - create a database using only the new set of samples using `createDatabase.R`
+  - merge the old and new databases using the `mergeDatabase.R` script. This will create a _merged.RData_ database file. There should be no overlap between the names of samples (mandatory), groups and projects (unless this is actually desired) in the two input databases. An inner join is made between the count tables of the two input databases, so any missing genes from one of the input databases will not be present in the output. The dictionary from the first input database will be used.
+
+
+- A third option is to start manually update the objects in an existing RData database: make inner join RPKMs, add new rows in meta table, and update timestamp.
 
 # Extending espresso to other species
 

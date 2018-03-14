@@ -1,6 +1,6 @@
 shinyUI(
   navbarPage(
-    'espresso', theme = shinytheme("yeti"),
+    'espresso | Wolfrum lab', theme = shinytheme("yeti"),
     
     tabPanel(
       "Gene expression",
